@@ -1,60 +1,40 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+  <div>
+    <div class="web-header d-flex flex-column flex-sm-row align-items-center px-sm-4 p-3 border-bottom shadow">
+      <h3 class="ml-sm-5 mr-sm-auto">Forum</h3>
+      <nav class="col-12 col-sm-4 d-flex mr-md-4">
+        <div class="flex-grow-1 text-center "><span>Log-in</span></div>
+        <div class="border-left"></div>
+        <div class="flex-grow-1 text-center"><span>Sign-up</span></div>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="col-sm-8">
+        <div></div>
+        <div><main-pic /></div>
+      </div>
+      <div class="col-sm-4">
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import mainPic from './assets/main-pic.svg'
 export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  components: {
+    mainPic
   }
 }
 </script>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+<style>
+  * {
+    border: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+  }
+  .web-header{
+    background-image: linear-gradient(to right , rgba(138, 126, 112, 0.12), #fff);
+  }
 </style>
