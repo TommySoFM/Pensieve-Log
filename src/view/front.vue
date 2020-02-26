@@ -16,6 +16,34 @@
     <template v-if="this.isLoginPage || this.isSignupPage">
       <router-view></router-view>
     </template>
+
+    <!--Pop-up Notice-->
+    <notifications group="notice-app"
+                   :width="500"
+                   animation-name="v-fade-left"
+                   position="center left">
+      <template slot="body" slot-scope="props">
+        <div class="custom-template"
+             :class="{ 'notice-error-container' : props.item.type == 'error'}">
+          <div class="custom-template-icon"
+               :class="{ 'notice-error-icon' : props.item.type == 'error'}">
+            <b-icon-check-circle v-if="props.item.type == 'success'"/>
+            <b-icon-alert-triangle v-if="props.item.type == 'error'"/>
+          </div>
+          <div class="custom-template-content">
+            <div class="custom-template-title"
+                 :class="{ 'notice-error-title' : props.item.type == 'error'}">
+              {{props.item.title}}
+            </div>
+
+            <div class="custom-template-text">
+              {{props.item.text}}
+            </div>
+          </div>
+          <div class="custom-template-close"> </div>
+        </div>
+      </template>
+    </notifications>
   </div>
 </template>
 <script>

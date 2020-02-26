@@ -30,6 +30,8 @@
 </template>
 
 <script>
+  import { BIconAlertTriangle, BIconCheckCircle } from 'bootstrap-vue';
+  import frontMixin from "./mixins/frontMixin";
   import logoPic from './assets/logo-pic.svg'
   import {mapGetters} from "vuex";
 
@@ -46,14 +48,22 @@ export default {
         'isSignupPage'
       ])
   },
+  mixins:[
+    frontMixin
+  ],
   components: {
-    logoPic
+    logoPic,
+    BIconAlertTriangle,
+    BIconCheckCircle,
   },
   methods: {
     scrollToBottom(){
       let container = document.querySelector('html');
       let scrollHeight = container.scrollHeight;
       container.scrollTop = scrollHeight;
+    },
+    logout() {
+      this.mixinLogout();
     }
   }
 }
@@ -107,6 +117,10 @@ export default {
     background-color: rgba(251, 222, 225, 0.5) ;
     color: #eb685a;
   }
+  .button-disabled{
+    color: rgba(119, 119, 119, 0.6);
+    cursor: default;
+  }
   .button-action :hover{
     transition: all .2s;
     transform: translateY(-3px);
@@ -131,6 +145,17 @@ export default {
   .nav-header:hover::after {
     transform: scaleX(0.6);
   }
+  .page-redir{
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 110%;
+    color: #004662;
+    border-bottom: 3px solid #004662;
+  }
+  .page-redir:hover{
+    color: rgba(0, 70, 98, 0.67);
+    border-bottom: 3px solid rgba(0, 70, 98, 0.67);
+  }
 
   /* Apply to xs-size */
   @media screen and (max-width: 768px){
@@ -151,5 +176,87 @@ export default {
       height: 90vh;
       padding-top: 15vh;
     }
+    .form-bg-color{
+      border-top: 3px groove #004662;
+      background-image: linear-gradient(to top, rgba(138, 126, 112, 0.12), #fafafa);
+    }
+  }
+
+  /* Notification Style */
+  .custom-template {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    font-size: 12px;
+    height: 8vh;
+    margin: 10px 5px 0px 5px;
+    align-items: center;
+    background: #E8F9F0;
+    border: 2px solid #1abc9c;
+  }
+
+  .notice-error-container {
+    background: #fad7d3;
+    border: 2px solid #e74c3c;
+  }
+
+  .custom-template,
+  .custom-template > div {
+    box-sizing: border-box;
+    border-radius: 20px;
+  }
+  .custom-template-icon {
+    flex: 0 1 10%;
+    color: #15C371;
+    font-size: 45px;
+    font-weight: 600;
+    padding: 0 10px !important;
+  }
+  .notice-error-icon {
+    color: #f29f97;
+  }
+  .custom-template-close {
+    flex: 0 1 auto;
+    padding: 0 20px;
+    font-size: 16px;
+    opacity: 0.2;
+    cursor: pointer;
+  }
+  .custom-template-close:hover {
+    opacity: 0.8;
+  }
+  .custom-template-content {
+    padding: 10px;
+    flex: 1 0 auto;
+  }
+  .custom-template-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #90f0dd;
+    letter-spacing: +2.3px;
+    text-shadow: +2.3px 0 #1abc9c, -2.3px 0 #1abc9c, 0 +2.3px #1abc9c, 0 -2.3px #1abc9c;
+  }
+  .notice-error-title{
+    color: rgba(251, 222, 225, 0.62);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: +2.3px;
+    text-shadow: +2px 0 #e32a3a, -2px 0 #e32a3a, 0 +2px #e32a3a, 0 -2px #e32a3a;
+  }
+  .custom-template-text {
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: +0.5px;
+  }
+
+  .v-fade-left-enter-active,
+  .v-fade-left-leave-active,
+  .v-fade-left-move {
+    transition: all .5s;
+  }
+  .v-fade-left-enter,
+  .v-fade-left-leave-to {
+    opacity: 0;
+    transform: translateX(-500px) scale(0.2);
   }
 </style>
