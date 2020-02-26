@@ -17,10 +17,16 @@
           <b-input type="password"></b-input>
         </b-form-group>
       </div>
-      <div class="button-action clearfix text-center font-weight-bolder">
+      <div class="button-action clearfix text-center font-weight-bolder mb-5">
         <h5 class="button button-confirm float-left col-5 py-2 ml-3">Submit</h5>
         <h5 class="button button-reset float-left offset-1 col-5 py-2">Reset</h5>
       </div>
+      <p>
+        *Already registered? &nbsp
+        <router-link class="page-redir" tag="span" to="/login">
+          Here to Login!
+        </router-link>
+      </p>
     </b-form>
   </div>
 </template>

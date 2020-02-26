@@ -9,41 +9,52 @@
       </div>
 <!--      <h3 class="mr-sm-auto ml-sm-5">Pensieve Log</h3>-->
       <nav class="nav-indication col-2 mr-5 d-none d-lg-inline-block">
-        <!--        <h5 class="text-center border-left border-right">Login</h5>-->
-                <h5 class="text-center border-left border-right">Sign-up</h5>
+                <h5 class="text-center border-left border-right" v-if="this.isLoginPage">Login</h5>
+                <h5 class="text-center border-left border-right" v-if="this.isSignupPage">Sign-up</h5>
       </nav>
       <div class="col-1 d-none d-lg-inline-block"></div>
-      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none">
-        <div class="flex-grow-1 text-center"><span>Log-in</span></div>
+      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0" @click="scrollToBottom">
+        <router-link tag="div" to="/login" class="nav-header flex-grow-1 text-center">
+          Log-in
+        </router-link>
         <div class="border-left"></div>
-        <div class="flex-grow-1 text-center"><span>Sign-up</span></div>
+        <router-link tag="div" to="/signup" class="nav-header flex-grow-1 text-center" @click="scrollToBottom">
+          Sign-up
+        </router-link>
       </nav>
     </div>
-    <div class="container-fluid d-flex flex-lg-row flex-column border-bottom-3">
-      <div class="col-lg-8 my-3">
-        <div class="col-lg-12 my-4 d-flex flex-column mx-3">
-         <h1 class="line-top display-3 font-weight-bolder">Thought?</h1>
-         <h3 class="line-bottom mr-xl-5 display-4 text-right">Share with everyone!</h3>
-        </div>
-        <svg class="col-lg-10 align-self-end ml-md-5" viewBox="100 20 1150 900"  preserveAspectRatio="xMidYMid meet">
-          <main-pic class="main-pic"/>
-        </svg>
-      </div>
-      <div class="button-action col-3 d-none d-lg-block text-center my-auto">
-        <h3 class="button button-login py-4 my-5">Log-in</h3>
-        <h3 class="button button-signup py-4 ">Sign-up</h3>
-      </div>
+    <div class="web-body">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
   import logoPic from './assets/logo-pic.svg'
-  import mainPic from './assets/main-pic.svg'
+  import {mapGetters} from "vuex";
+
 export default {
+  data(){
+    return{
+      currentPage: this.$route.path
+    }
+  },
+  computed:{
+      ...mapGetters([
+        'isFrontPage',
+        'isLoginPage',
+        'isSignupPage'
+      ])
+  },
   components: {
-    logoPic,
-    mainPic
+    logoPic
+  },
+  methods: {
+    scrollToBottom(){
+      let container = document.querySelector('html');
+      let scrollHeight = container.scrollHeight;
+      container.scrollTop = scrollHeight;
+    }
   }
 }
 </script>
@@ -63,11 +74,11 @@ export default {
   }
   .form-login{
     height: 90vh;
-    padding-top: 40vh;
+    padding-top: 30vh;
   }
   .form-signup{
     height: 90vh;
-    padding-top: 35vh;
+    padding-top: 25vh;
   }
   .button {
     font-weight: 700;
@@ -104,6 +115,21 @@ export default {
     transition: all .1s;
     transform: translateY(-1px);
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-header{
+    cursor: pointer;
+  }
+  .nav-header::after{
+    display: block;
+    content: '';
+    padding-bottom: 4px;
+    border-bottom: 2px solid #004662;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+  }
+  .nav-header:hover::after {
+    transform: scaleX(0.6);
   }
 
   /* Apply to xs-size */
