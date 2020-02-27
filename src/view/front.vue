@@ -57,14 +57,6 @@
         'isSignupPage'
         ])
     },
-    created() {
-      this.$store.dispatch('setCurrentPathName', this.$route.name)
-    },
-    watch: {
-      $route(to, from){
-        this.$store.dispatch('setCurrentPathName', this.$route.name)
-      }
-    },
     components: {
       mainPic
     }

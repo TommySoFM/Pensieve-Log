@@ -1,6 +1,5 @@
 <template>
   <div class="col-8 col-lg-4 col-xl-3 mx-auto mx-lg-0 form-bg-color">
-    <h2>{{validation.isUsernameValid}} // {{validation.isPasswordValid}}</h2>
     <b-form class="form-signup">
       <div class="mb-3">
         <b-form-group label="Username" description="*Length 6-20 characters long.">
@@ -137,7 +136,7 @@
           this.entry[key]='';
         });
         Object.keys(this.validation).forEach((key)=>{
-          this.validation[key]=true;
+          this.validation[key]=null;
         })
       },
       isFormatCorrect(entry,format,key,mode){

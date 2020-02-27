@@ -3,22 +3,29 @@
     <div class="web-header sticky-top d-flex flex-column flex-sm-row align-items-center px-sm-4 px-3 pt-3 border-bottom shadow">
       <div class="d-flex align-items-center mr-sm-auto">
       <svg class="logo-pic py-0" viewBox="-200 -40 650 650">
-        <logo-pic></logo-pic>
+        <logo-pic/>
       </svg>
       <h3 class="ml-3">Pensieve Log</h3>
       </div>
-<!--      <h3 class="mr-sm-auto ml-sm-5">Pensieve Log</h3>-->
       <nav class="nav-indication col-2 mr-5 d-none d-lg-inline-block">
-                <h5 class="text-center border-left border-right" v-if="this.isLoginPage">Login</h5>
-                <h5 class="text-center border-left border-right" v-if="this.isSignupPage">Sign-up</h5>
+        <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isLoginPage">Login</router-link>
+        <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isSignupPage">Sign-up</router-link>
+        <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isHomePage">Logout</router-link>
       </nav>
       <div class="col-1 d-none d-lg-inline-block"></div>
       <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0" @click="scrollToBottom">
-        <router-link tag="div" to="/login" class="nav-header flex-grow-1 text-center">
+        <router-link tag="div" to="/home" class="nav-header flex-grow-1 text-center" v-if="!isHomePage">
+          Home
+        </router-link>
+        <div class="border-left"></div>
+        <router-link tag="div" to="/" class="nav-header flex-grow-1 text-center" v-if="isHomePage">
+          Logout
+        </router-link>
+        <router-link tag="div" to="/login" class="nav-header flex-grow-1 text-center" v-if="isFrontPage || isLoginPage || isSignupPage">
           Log-in
         </router-link>
         <div class="border-left"></div>
-        <router-link tag="div" to="/signup" class="nav-header flex-grow-1 text-center" @click="scrollToBottom">
+        <router-link tag="div" to="/signup" class="nav-header flex-grow-1 text-center" v-if="isFrontPage || isLoginPage || isSignupPage">
           Sign-up
         </router-link>
       </nav>
@@ -43,9 +50,11 @@ export default {
   },
   computed:{
       ...mapGetters([
+        'getCurrentPathName',
         'isFrontPage',
         'isLoginPage',
-        'isSignupPage'
+        'isSignupPage',
+        'isHomePage'
       ])
   },
   mixins:[
@@ -55,6 +64,14 @@ export default {
     logoPic,
     BIconAlertTriangle,
     BIconCheckCircle,
+  },
+  created() {
+    this.$store.dispatch('setCurrentPathName', this.$route.name)
+  },
+  watch: {
+    $route(to, from){
+      this.$store.dispatch('setCurrentPathName', this.$route.name)
+    }
   },
   methods: {
     scrollToBottom(){
@@ -76,7 +93,7 @@ export default {
     font-family: 'Ubuntu', sans-serif;
   }
   .web-header{
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.95);
     background-image: linear-gradient(to right , rgba(138, 126, 112, 0.12), #fff);
   }
   .logo-pic{
@@ -107,15 +124,15 @@ export default {
   }
   .button-confirm:hover,
   .button-confirm:active{
-    border: 3px solid rgba(18, 128, 106, 0.65);
-    background-color: rgba(174, 244, 230, 0.50);
-    color: #1abc9c;
+    border: 3px solid #004662;
+    background-color: #fcfff2;
+    color: #004662;
   }
   .button-reset:hover,
   .button-reset:active{
-    border: 3px solid rgba(227, 42, 58, 0.60);
+    border: 3px solid #E32A3A;
     background-color: rgba(251, 222, 225, 0.5) ;
-    color: #eb685a;
+    color: #E32A3A;
   }
   .button-disabled{
     color: rgba(119, 119, 119, 0.6);

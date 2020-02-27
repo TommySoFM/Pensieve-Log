@@ -1,8 +1,8 @@
 import front from '../view/front'
 import signup from '../view/signup'
 import login from '../view/login'
-// import home from '../components/home/home'
-// import posts from '../components/home/post'
+import home from '../view/home'
+import post from '../view/post'
 
 export const routes = [
   { path: '/', name: 'front', component: front,
@@ -11,10 +11,10 @@ export const routes = [
       { path: '/signup', name: 'signup' , component: signup },
     ]
   },
-  // { path: '/home', component: home,
-  //   children:[
-  //     {path: 'post/:page', component: posts}
-  //   ]
-  // },
+  { path: '/home', name: 'home', component: home,
+    children:[
+      {path: 'post/:page', component: post}
+    ]
+  },
   { path: '*', redirect: '/log_in'}
 ]
