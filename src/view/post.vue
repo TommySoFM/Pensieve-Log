@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flex-wrap justify-content-around" style="height: 90vh; overflow: scroll">
-    <div class="col-6 post-container" v-for="post in getPosts">
+  <div class="d-flex flex-wrap justify-content-around align-items-start" style="height: 90vh; overflow: scroll">
+    <div class="col-7 post-container" v-for="post in getPosts">
       <div class="post-header d-flex">
         <p class="ml-3 mr-1 mb-0">
           <span>#</span>
@@ -33,7 +33,7 @@
         </div>
         <div style="border-right: 2px solid rgba(158,158,158,0.4)"/>
         <div class="post-comment-button flex-grow-1 text-center mr-5">
-          <p class="m-auto font-weight-bolder">{{post.postComments.length}} Comment<span v-if="post.postComments.length>1">s</span></p>
+          <p class="mx-auto my-1 font-weight-bolder">{{post.postComments.length}} Comment<span v-if="post.postComments.length>1">s</span></p>
         </div>
       </div>
       <post-comment :postData="post"/>
