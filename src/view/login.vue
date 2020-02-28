@@ -17,7 +17,7 @@
         </span>
         <span :class="{'button-action': !isAllEmpty }">
          <h5 class="button float-left offset-1 col-5 py-2"
-             :class=" [ isAllEmpty ? 'button-disabled' : ['button-reset'] ] "
+             :class=" [ isAllEmpty ? 'button-disabled' : 'button-reset' ] "
              :disabled="isAllEmpty" @click="reset">Reset</h5>
         </span>
       </div>

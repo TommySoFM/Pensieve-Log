@@ -13,7 +13,8 @@ export const routes = [
   },
   { path: '/home', name: 'home', component: home,
     children:[
-      {path: 'post/:page', component: post}
+      // {path: 'post',name: 'post', component: post}
+      {path: 'post/:page',name: 'post', component: post}
     ]
   },
   { path: '*', redirect: '/log_in'}

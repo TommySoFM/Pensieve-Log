@@ -90,13 +90,13 @@ export default {
     },
 
     mixinLogout() {
-      let targetUrl = this.getServerUrl + '/logout'
+      let targetUrl = this.getServerUrl + '/logout';
       axios.get(targetUrl)
         .then(response => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             this.$notify({group: 'notice-app', type:'success', title: 'Success!' , duration: 2250,
               text: 'Logout Success! Redirect to Home Page in 3 Seconds...'});
-            setTimeout(()=>{this.$router.push('/log_in')},3000);
+            setTimeout(()=>{this.$router.push('/login')},3000);
           }
         })
         .catch(error => {

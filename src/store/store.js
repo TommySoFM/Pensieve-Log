@@ -11,8 +11,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state:{
-    // serverUrl: 'http://18.178.174.29:8080',
-    serverUrl: 'http://localhost:8080'
+    serverUrl: 'http://18.178.174.29:8080',
+    // serverUrl: 'http://localhost:8080'
   },
   getters:{
     getServerUrl: (state) =>{

@@ -10,21 +10,18 @@
       <nav class="nav-indication col-2 mr-5 d-none d-lg-inline-block">
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isLoginPage">Login</router-link>
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isSignupPage">Sign-up</router-link>
-        <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isHomePage">Logout</router-link>
+        <h5 class="text-center border-left border-right" style="cursor: pointer" @click="logout" v-if="!isFrontPage && !isLoginPage && !isSignupPage">Logout</h5>
       </nav>
       <div class="col-1 d-none d-lg-inline-block"></div>
       <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0" @click="scrollToBottom">
-        <router-link tag="div" to="/home" class="nav-header flex-grow-1 text-center" v-if="!isHomePage">
-          Home
-        </router-link>
-        <div class="border-left"></div>
-        <router-link tag="div" to="/" class="nav-header flex-grow-1 text-center" v-if="isHomePage">
+        <div class="border-left"/>
+        <router-link tag="div" to="/" class="nav-header flex-grow-1 text-center" v-if="!isFrontPage && !isLoginPage && !isSignupPage">
           Logout
         </router-link>
         <router-link tag="div" to="/login" class="nav-header flex-grow-1 text-center" v-if="isFrontPage || isLoginPage || isSignupPage">
           Log-in
         </router-link>
-        <div class="border-left"></div>
+        <div class="border-left"/>
         <router-link tag="div" to="/signup" class="nav-header flex-grow-1 text-center" v-if="isFrontPage || isLoginPage || isSignupPage">
           Sign-up
         </router-link>
@@ -38,9 +35,9 @@
 
 <script>
   import { BIconAlertTriangle, BIconCheckCircle } from 'bootstrap-vue';
-  import frontMixin from "./mixins/frontMixin";
   import logoPic from './assets/logo-pic.svg'
   import {mapGetters} from "vuex";
+  import homeMixin from "./mixins/homeMixin";
 
 export default {
   data(){
@@ -58,7 +55,7 @@ export default {
       ])
   },
   mixins:[
-    frontMixin
+    homeMixin
   ],
   components: {
     logoPic,

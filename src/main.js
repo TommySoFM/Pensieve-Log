@@ -28,6 +28,28 @@ const router = new VueRouter({
   mode: 'history'
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.path === '/' ||to.path === '/login' || to.path === '/signup'){
+    next();
+  } else {
+    let targetUrl = store.getters.getServerUrl + '/isSessionValid';
+
+    axios.get(targetUrl)
+      .then(response => {
+        if (response.status === 202) {
+          store.dispatch('setUserData',response.data);
+          next();
+        }
+      }).catch(error => {
+      console.log(error);
+      if (error.response.status === 401) {
+        window.alert("Please Login");
+        next("/")
+      }
+    })
+  }
+});
+
 new Vue({
   el: '#app',
   router,

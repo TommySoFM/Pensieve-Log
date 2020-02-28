@@ -1,48 +1,79 @@
 <template>
   <div class="container-fluid d-flex">
-    <div class="home-panel col-4 mr-auto" style="border-right: 3px solid #777777">
-      <h2 class="mt-5 text-center">Hello Banaji</h2>
+    <div class="home-panel col-4 mr-auto" style="border-right: 3px solid #777777;
+    background-image: linear-gradient(to left , rgba(175,175,175,0.16), #fff)">
+      <h2 class="mt-5 text-center">Hello {{ getUserData.username }} </h2>
 
       <b-form class="col-10 ml-4 my-5">
         <div class="textbox-heading">
           <p class="font-weight-bolder m-0">New Thought:</p>
         </div>
-        <b-form-textarea class="textbox p-3" placeholder="Type to Share Your Thought" rows="4" max-rows="6"/>
+        <b-form-textarea class="textbox p-3" v-model="postText" placeholder="Type to Share Your Thought" rows="4" max-rows="6"/>
       </b-form>
       <div class="clearfix text-center font-weight-bolder">
         <span class="button-action">
-          <h5 class="button button-confirm float-left col-4 py-2 ml-5">Post</h5>
+          <h5 class="button button-confirm float-left col-4 py-2 ml-5" @click="newPost">Post</h5>
         </span>
-        <span class="button-action">
-         <h5 class="button button-reset float-left offset-1 col-4 py-2">Reset</h5>
+        <span :class="{'button-action': this.postText!=='' }">
+         <h5 class="button float-left offset-1 col-4 py-2" :class="[this.postText!=='' ? 'button-reset' : 'button-disabled']" @click="reset">Reset</h5>
         </span>
       </div>
-      <div class="d-flex align-items-center mt-5 mb-2 ml-5">
-        <svg class="col-3 nav-arrow p-0" viewBox="0 -35 230 230">
+      <div class="d-flex align-items-center mt-5 mb-2">
+        <svg v-if="isFirstPage" class="col-4 nav-arrow p-0 ml-4" viewBox="0 -35 230 230">
+          <arrow-left-disabled/>
+        </svg>
+        <router-link tag="svg" :to="previous" v-else class="nav-arrow nav-arrow-active col-4 p-0 ml-4" viewBox="0 -35 230 230">
           <arrow-left/>
+        </router-link>
+        <b-form-select class="page-selector col-2" v-model="selectedPage" @change="changePage(selectedPage)">
+          <b-form-select-option :value="null" disabled>Page</b-form-select-option>
+          <template v-for="page in getTotalPages" >
+            <option :value="page">{{page}}</option>
+          </template>
+        </b-form-select>
+        <svg v-if="isLastPage" class="nav-arrow col-4 p-0" viewBox="0 -35 230 230">
+         <arrow-right-disabled/>
         </svg>
-        <div>
-          <b-dropdown class="col-6" text="Page" v-model="selectedPage" @change="changePage(selectedPage)">
-            <b-dropdown-header>Select Page</b-dropdown-header>
-            <b-dropdown-divider/>
-            <template v-for="page in getTotalPages" >
-              <b-dropdown-item :value="page" >{{page}}</b-dropdown-item>
-            </template>
-          </b-dropdown>
-        </div>
-        <svg class="col-3 nav-arrow p-0" viewBox="0 -35 230 230">
+        <router-link tag="svg" :to="next" v-else class="nav-arrow nav-arrow-active col-4 p-0" viewBox="0 -35 230 230">
           <arrow-right/>
-        </svg>
+        </router-link>
       </div>
       <div class="col-8 offset-3 pl-5 font-weight-bolder">
-        <h4>Page: 3/4 </h4>
-<!--        <p>Page:  {{getCurrentPage + 1}}/{{getTotalPages}} </p>-->
+        <h4>Page: {{getCurrentPage + 1}}/{{getTotalPages}} </h4>
       </div>
     </div>
 
     <div class="col-8">
       <router-view/>
     </div>
+
+    <!--Pop-up Notice-->
+    <notifications group="notice-app"
+                   :width="500"
+                   animation-name="v-fade-left"
+                   position="center left">
+      <template slot="body" slot-scope="props">
+        <div class="custom-template"
+             :class="{ 'notice-error-container' : props.item.type === 'error'}">
+          <div class="custom-template-icon"
+               :class="{ 'notice-error-icon' : props.item.type === 'error'}">
+            <b-icon-check-circle v-if="props.item.type === 'success'"/>
+            <b-icon-alert-triangle v-if="props.item.type === 'error'"/>
+          </div>
+          <div class="custom-template-content">
+            <div class="custom-template-title"
+                 :class="{ 'notice-error-title' : props.item.type === 'error'}">
+              {{props.item.title}}
+            </div>
+
+            <div class="custom-template-text">
+              {{props.item.text}}
+            </div>
+          </div>
+          <div class="custom-template-close"> </div>
+        </div>
+      </template>
+    </notifications>
   </div>
 </template>
 <script>
@@ -50,6 +81,8 @@
   import {mapGetters} from "vuex";
   import arrowLeft from "../assets/arrow-left.svg";
   import arrowRight from "../assets/arrow-right.svg";
+  import arrowLeftDisabled from "../assets/arrow-left-disabled.svg"
+  import arrowRightDisabled from "../assets/arrow-right-disabled.svg"
 
   export default{
     data: function () {
@@ -86,7 +119,9 @@
     ],
     components: {
       arrowLeft,
-      arrowRight
+      arrowRight,
+      arrowLeftDisabled,
+      arrowRightDisabled
     },
     watch: {
       $route(to,from){
@@ -135,9 +170,30 @@
     box-shadow: 0px 3px 10px rgba(107, 107, 107, 0.2);
     -webkit-box-shadow: 0px 3px 10px rgba(107, 107, 107, 0.2);
   }
-
   .nav-arrow{
-    height: 8vh;
+    height: 11vh;
     width: auto;
+  }
+  .nav-arrow{
+    transition: transform .1s ease;
+  }
+  .nav-arrow-active:hover{
+    transform: translateY(-3.5px);
+    transition: transform .1s ease;
+  }
+  .nav-arrow-active:active{
+    transform: translateY(-0.5px);
+  }
+  .page-selector{
+    font-size: 1.3rem;
+    font-weight: 600;
+    background-color: #fcfff2;
+    border: 4px solid #004662;
+    border-radius: .5rem;
+    vertical-align: center;
+  }
+  .page-selector:focus{
+    border: 4px solid #004662;
+    box-shadow: 0 0 0 0.2rem #fcfff2;
   }
 </style>
