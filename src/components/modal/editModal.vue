@@ -30,30 +30,30 @@
   </div>
 </template>
 <script>
-  import {mapGetters, mapActions} from 'vuex'
-  import {BIconQuestionFill,BIconXCircle, BIconCheckCircle} from 'bootstrap-vue'
-  export default {
-    props:[
-      'modalMessage',
-      'modalAction',
-    ],
-    computed:{
-      ...mapGetters([
-        'getEditModalSwitch',
-        'getModalId'
-      ])
-    },
-    methods:{
-      ...mapActions([
-        'modalOff'
-      ])
-    },
-    components:{
-      BIconQuestionFill,
-      BIconXCircle,
-      BIconCheckCircle
-    }
+import { mapGetters, mapActions } from 'vuex'
+import { BIconQuestionFill, BIconXCircle, BIconCheckCircle } from 'bootstrap-vue'
+export default {
+  props: [
+    'modalMessage',
+    'modalAction'
+  ],
+  computed: {
+    ...mapGetters([
+      'getEditModalSwitch',
+      'getModalId'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'modalOff'
+    ])
+  },
+  components: {
+    BIconQuestionFill,
+    BIconXCircle,
+    BIconCheckCircle
   }
+}
 </script>
 <style>
   .custom-modal-background {
@@ -65,7 +65,7 @@
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.5);
-    /*animation: onShow .3s ease-in-out;*/
+    animation: onShow .3s ease-in-out;
   }
 
   .custom-modal-box {
@@ -146,35 +146,8 @@
     filter: brightness(130%) saturate(80%);
   }
 
-
   @keyframes onShow {
     0% {opacity: 0%}
     100% {opacity: 100%}
-  }
-
-
-  @media only screen and (max-width: 1130px) and (min-width: 661px){
-    .custom-modal-box{
-      left: 0 !important;
-    }
-  }
-  @media only screen and (max-width:660px){
-    .custom-modal-background{
-      height: 400vh;
-      z-index: 5;
-    }
-    .custom-modal-box {
-      position: fixed;
-      z-index: 6;
-      top: 20%;
-      left: -30%;
-      transform: scale(0.6);
-    }
-  }
-  @media only screen and (max-width:353px){
-    .custom-modal-box{
-      left: -43%;
-      transform: scale(0.5);
-    }
   }
 </style>

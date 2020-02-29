@@ -49,7 +49,7 @@
         </span>
       </div>
       <p>
-        *Already registered? &nbsp
+        *Already registered?
         <router-link class="page-redir" tag="span" to="/login">
           Here to Login!
         </router-link>
@@ -58,107 +58,106 @@
   </div>
 </template>
 <script>
-  import axios from 'axios';
-  import {mapGetters} from 'vuex'
-  import frontMixin from '../mixins/frontMixin';
+import axios from 'axios'
+import { mapGetters } from 'vuex'
+import frontMixin from '../mixins/frontMixin'
 
-  export default {
-    data () {
-      return {
-        entry:{
-          username: '',
-          password: '',
-          reenter: ''
-        },
-        format:{
-          username:'(?=.*?[a-zA-Z\\W]).{6,20}',
-          password:'(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\\W]).{8,25}',
-          pw_Lowercase: '(?=.*?[a-z]).{1,}',
-          pw_Uppercase: '(?=.*?[A-Z]).{1,}',
-          pw_Special: '(?=.*?[\\W]).{1,}',
-          pw_Length: '.{8,25}'
-        },
-        validation:{
-          isUsernameAvailable: null,
-          isUsernameValid: null,
-          isPasswordValid: null,
-          isPwWithLowercase: null,
-          isPwWithUppercase: null,
-          isPwWithSpecialUnit: null,
-          isPwWithLength: null,
-          isPasswordSame: null
-        },
-      }
-    },
-    mixins:[
-      frontMixin
-    ],
-    computed:{
-      username(){return this.entry.username},
-      password(){return this.entry.password},
-      reenter(){return this.entry.reenter},
-      isAllValid(){
-        return Object.keys(this.validation).every((key)=>{return this.validation[key]===true})
+export default {
+  data () {
+    return {
+      entry: {
+        username: '',
+        password: '',
+        reenter: ''
       },
-      isAllEmpty(){
-        return Object.keys(this.entry).every((key)=>{return this.entry[key]===''})
+      format: {
+        username: '(?=.*?[a-zA-Z\\W]).{6,20}',
+        password: '(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\\W]).{8,25}',
+        pw_Lowercase: '(?=.*?[a-z]).{1,}',
+        pw_Uppercase: '(?=.*?[A-Z]).{1,}',
+        pw_Special: '(?=.*?[\\W]).{1,}',
+        pw_Length: '.{8,25}'
       },
-      ...mapGetters(['getServerUrl'])
-    },
-    watch:{
-      username(){
-        setTimeout(this.checkIsNameUsed, 300);
-      }
-    },
-    methods:{
-      submit() {
-        this.checkAllEntryFormat();
-        console.log(Object.keys(this.validation).forEach((key)=>{console.log(key+": "+this.validation[key])}));
-        if(this.isAllValid){
-          this.mixinAddUser(this.entry.username, this.entry.password);
-          this.reset()
-        }
-      },
-      checkIsNameUsed(){
-        let targetUrl = this.getServerUrl+'/user/isNameUsed';
-        let formData = new FormData;
-        formData.append("username", this.entry.username);
-        axios.post(targetUrl, formData)
-          .then(response => {
-            if (response.data){
-              this.validation.isUsernameAvailable = false;
-            } else{
-              this.validation.isUsernameAvailable = true;
-            }
-          }).catch(error => {console.log(error)});
-      },
-      reset(){
-        Object.keys(this.entry).forEach((key)=>{
-          this.entry[key]='';
-        });
-        Object.keys(this.validation).forEach((key)=>{
-          this.validation[key]=null;
-        })
-      },
-      isFormatCorrect(entry,format,key,mode){
-        let qualifier;
-        let targetKey = Object.keys(this.validation)[key];
-
-        if(mode === 'match'){
-          this.validation[targetKey] = RegExp(format).test(entry);
-        } else if (mode === 'equals'){
-          this.validation[targetKey] = (entry === format);
-        }
-      },
-      checkAllEntryFormat(){
-        this.isFormatCorrect(this.username,this.format.username, 1, 'match');
-        this.isFormatCorrect(this.password,this.format.password,2, 'match');
-        this.isFormatCorrect(this.password,this.format.pw_Lowercase,3, 'match');
-        this.isFormatCorrect(this.password,this.format.pw_Uppercase,4, 'match');
-        this.isFormatCorrect(this.password,this.format.pw_Special,5, 'match');
-        this.isFormatCorrect(this.password,this.format.pw_Length,6, 'match');
-        this.isFormatCorrect(this.reenter,this.password,7, 'equals');
+      validation: {
+        isUsernameAvailable: null,
+        isUsernameValid: null,
+        isPasswordValid: null,
+        isPwWithLowercase: null,
+        isPwWithUppercase: null,
+        isPwWithSpecialUnit: null,
+        isPwWithLength: null,
+        isPasswordSame: null
       }
     }
+  },
+  mixins: [
+    frontMixin
+  ],
+  computed: {
+    username () { return this.entry.username },
+    password () { return this.entry.password },
+    reenter () { return this.entry.reenter },
+    isAllValid () {
+      return Object.keys(this.validation).every((key) => { return this.validation[key] === true })
+    },
+    isAllEmpty () {
+      return Object.keys(this.entry).every((key) => { return this.entry[key] === '' })
+    },
+    ...mapGetters(['getServerUrl'])
+  },
+  watch: {
+    username () {
+      setTimeout(this.checkIsNameUsed, 300)
+    }
+  },
+  methods: {
+    submit () {
+      this.checkAllEntryFormat()
+      console.log(Object.keys(this.validation).forEach((key) => { console.log(key + ': ' + this.validation[key]) }))
+      if (this.isAllValid) {
+        this.mixinAddUser(this.entry.username, this.entry.password)
+        this.reset()
+      }
+    },
+    checkIsNameUsed () {
+      const targetUrl = this.getServerUrl + '/user/isNameUsed'
+      const formData = new FormData()
+      formData.append('username', this.entry.username)
+      axios.post(targetUrl, formData)
+        .then(response => {
+          if (response.data) {
+            this.validation.isUsernameAvailable = false
+          } else {
+            this.validation.isUsernameAvailable = true
+          }
+        }).catch(error => { console.log(error) })
+    },
+    reset () {
+      Object.keys(this.entry).forEach((key) => {
+        this.entry[key] = ''
+      })
+      Object.keys(this.validation).forEach((key) => {
+        this.validation[key] = null
+      })
+    },
+    isFormatCorrect (entry, format, key, mode) {
+      const targetKey = Object.keys(this.validation)[key]
+
+      if (mode === 'match') {
+        this.validation[targetKey] = RegExp(format).test(entry)
+      } else if (mode === 'equals') {
+        this.validation[targetKey] = (entry === format)
+      }
+    },
+    checkAllEntryFormat () {
+      this.isFormatCorrect(this.username, this.format.username, 1, 'match')
+      this.isFormatCorrect(this.password, this.format.password, 2, 'match')
+      this.isFormatCorrect(this.password, this.format.pw_Lowercase, 3, 'match')
+      this.isFormatCorrect(this.password, this.format.pw_Uppercase, 4, 'match')
+      this.isFormatCorrect(this.password, this.format.pw_Special, 5, 'match')
+      this.isFormatCorrect(this.password, this.format.pw_Length, 6, 'match')
+      this.isFormatCorrect(this.reenter, this.password, 7, 'equals')
+    }
   }
+}
 </script>

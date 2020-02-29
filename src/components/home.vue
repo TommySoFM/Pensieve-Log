@@ -1,4 +1,5 @@
 <template>
+  <transition name="panelAnimation">
     <div class="home-panel mr-auto d-flex" v-if="isPanelOpened">
       <div class="col-10" style="background: rgba(241,241,241,0.96); border-right: 8px groove #adb7bf">
         <h2 class="mt-5 text-center"> Control Panel </h2>
@@ -26,9 +27,7 @@
           </router-link>
           <b-form-select class="page-selector col-2" v-model="selectedPage" @change="changePage(selectedPage)">
             <b-form-select-option :value="null" disabled>Page</b-form-select-option>
-            <template v-for="page in getTotalPages" >
-              <option :value="page">{{page}}</option>
-            </template>
+            <option v-for="page in getTotalPages" :key="page" :value="page">{{page}}</option>
           </b-form-select>
           <svg v-if="isLastPage" class="nav-arrow col-4 p-0" viewBox="0 -35 230 230">
            <arrow-right-disabled/>
@@ -47,86 +46,90 @@
         </svg>
       </div>
     </div>
+  </transition>
 </template>
 <script>
-  import homeMixin from "../mixins/homeMixin";
-  import {mapGetters} from "vuex";
-  import arrowLeft from "../assets/arrow-left.svg";
-  import arrowRight from "../assets/arrow-right.svg";
-  import arrowLeftDisabled from "../assets/arrow-left-disabled.svg"
-  import arrowRightDisabled from "../assets/arrow-right-disabled.svg"
-  import chivronRight from "../assets/chevron-right.svg"
-  import chivronRightDisabled from "../assets/chevron-right-disabled.svg"
+import homeMixin from '../mixins/homeMixin'
+import { mapGetters } from 'vuex'
+import arrowLeft from '../assets/arrow-left.svg'
+import arrowRight from '../assets/arrow-right.svg'
+import arrowLeftDisabled from '../assets/arrow-left-disabled.svg'
+import arrowRightDisabled from '../assets/arrow-right-disabled.svg'
+import chivronRight from '../assets/chevron-right.svg'
 
-  export default{
-    data: function () {
-      return {
-        postText: '',
-        currentTime: new Date(),
-        selectedPage:this.$route.params.page
+export default {
+  data: function () {
+    return {
+      postText: '',
+      currentTime: new Date(),
+      selectedPage: this.$route.params.page
+    }
+  },
+  props: [
+    'isPanelOpened',
+    'togglePanel'
+  ],
+  computed: {
+    ...mapGetters([
+      'getUserData',
+      'getTotalPages',
+      'getCurrentPage',
+      'getRandomId'
+    ]),
+    next () {
+      const targetPage = '/post/' + (this.getCurrentPage + 2).toString()
+      return targetPage
+    },
+    previous () {
+      const targetPage = '/post/' + (this.getCurrentPage).toString()
+      return targetPage
+    },
+    isFirstPage () {
+      return this.getCurrentPage === 0
+    },
+    isLastPage () {
+      return this.getCurrentPage + 1 === this.getTotalPages
+    }
+  },
+  mixins: [
+    homeMixin
+  ],
+  components: {
+    arrowLeft,
+    arrowRight,
+    arrowLeftDisabled,
+    arrowRightDisabled,
+    chivronRight
+  },
+  watch: {
+    $route (to, from) {
+      this.selectedPage = this.$route.params.page
+    }
+  },
+  methods: {
+    newPost () {
+      if (RegExp('(?=.*?[a-zA-Z0-9\\W]).+').test(this.postText)) {
+        this.mixinNewPost(this.postText)
+      } else {
+        this.$notify({
+          group: 'notice-app',
+          type: 'error',
+          title: 'Failed!',
+          duration: 3000,
+          text: 'Post should contain at least one word!'
+        })
       }
     },
-    props:[
-      'isPanelOpened',
-      'togglePanel'
-    ],
-    computed: {
-      ...mapGetters([
-        "getUserData",
-        "getTotalPages",
-        "getCurrentPage",
-        "getRandomId"
-      ]),
-      next() {
-        let targetPage = '/post/' + (this.getCurrentPage + 2).toString();
-        return targetPage;
-      },
-      previous() {
-        let targetPage = '/post/' + (this.getCurrentPage).toString();
-        return targetPage;
-      },
-      isFirstPage(){
-        return this.getCurrentPage == 0;
-      },
-      isLastPage(){
-        return this.getCurrentPage + 1 === this.getTotalPages;
-      }
+    changePage (page) {
+      this.$router.push('/post/' + page)
     },
-    mixins:[
-      homeMixin
-    ],
-    components: {
-      arrowLeft,
-      arrowRight,
-      arrowLeftDisabled,
-      arrowRightDisabled,
-      chivronRight,
-      chivronRightDisabled
-    },
-    watch: {
-      $route(to,from){
-        this.selectedPage = this.$route.params.page;
-      }
-    },
-    methods: {
-      newPost() {
-        if (RegExp('(?=.*?[a-zA-Z0-9\\W]).+').test(this.postText)) {
-          this.mixinNewPost(this.postText);
-        } else {
-          this.$notify({group: 'notice-app', type:'error', title: 'Failed!' , duration: 3000,
-            text: 'Post should contain at least one word!'});
-        }
-      },
-      changePage(page){
-        this.$router.push('/post/'+page)
-      },
-      reset(){
-        this.postText = '';
-      }
+    reset () {
+      this.postText = ''
     }
   }
+}
 </script>
-<style>
+<style scoped>
   .home-panel{
     height: 100vh;
     width: 450px;
@@ -184,5 +187,21 @@
   .button-reset,
   .button-confirm{
     background-color: white;
+  }
+  .panelAnimation-enter-active{
+    animation: panelIn .3s ease-out;
+  }
+  .panelAnimation-leave-active{
+    animation: panelOut .3s ease-in;
+  }
+  @keyframes panelIn {
+    0% {transform: translateX(-300px); opacity: 0}
+    50% {transform: translateX(-100px); opacity: 70}
+    100% {transform: translateX(0px); opacity: 100}
+  }
+  @keyframes panelOut {
+    0% {transform: translateX(0px); opacity: 100}
+    50% {transform: translateX(-100px); opacity: 30}
+    100% {transform: translateX(-300px); opacity: 0}
   }
 </style>

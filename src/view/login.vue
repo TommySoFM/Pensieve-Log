@@ -22,7 +22,7 @@
         </span>
       </div>
       <p>
-        *Not registered? &nbsp
+        *Not registered?
         <router-link class="page-redir" tag="span" to="/signup">
           Click Here!
         </router-link>
@@ -31,36 +31,35 @@
   </div>
 </template>
 <script>
-  import frontMixin from "../mixins/frontMixin";
-  import { mapGetters } from 'vuex'
-  export default {
-    data() {
-      return{
-        username: '',
-        password: ''
-      }
+import frontMixin from '../mixins/frontMixin'
+import { mapGetters } from 'vuex'
+export default {
+  data () {
+    return {
+      username: '',
+      password: ''
+    }
+  },
+  computed: {
+    // To inactivate buttons when blank
+    isAllEmpty () {
+      return (this.username === '' && this.password === '')
     },
-    computed: {
-      //To inactivate buttons when blank
-      isAllEmpty(){
-        return (this.username === '' && this.password === '')
-      },
-      ...mapGetters([
-        'getServerUrl'
-      ])
+    ...mapGetters([
+      'getServerUrl'
+    ])
+  },
+  mixins: [
+    frontMixin
+  ],
+  methods: {
+    login () {
+      this.mixinLogin(this.username, this.password)
     },
-    mixins:[
-      frontMixin
-    ],
-    methods:{
-      login(){
-        this.mixinLogin(this.username,this.password);
-      },
-      reset(){
-        this.username = '';
-        this.password = '';
-      }
+    reset () {
+      this.username = ''
+      this.password = ''
     }
   }
+}
 </script>
-

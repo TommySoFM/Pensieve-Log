@@ -35,52 +35,54 @@
 </template>
 
 <script>
-  import { BIconAlertTriangle, BIconCheckCircle } from 'bootstrap-vue';
-  import logoPic from './assets/logo-pic.svg'
-  import {mapGetters} from "vuex";
-  import homeMixin from "./mixins/homeMixin";
+import { BIconAlertTriangle, BIconCheckCircle } from 'bootstrap-vue'
+import logoPic from './assets/logo-pic.svg'
+import { mapGetters } from 'vuex'
+import homeMixin from './mixins/homeMixin'
 
 export default {
-  data(){
-    return{
+  data () {
+    return {
       currentPage: this.$route.path
     }
   },
-  computed:{
-      ...mapGetters([
-        'getCurrentPathName',
-        'isFrontPage',
-        'isLoginPage',
-        'isSignupPage',
-      ]),
-    isHomePage(){
-        return (!this.isFrontPage && !this.isLoginPage && !this.isSignupPage)
+  computed: {
+    ...mapGetters([
+      'getCurrentPathName',
+      'isFrontPage',
+      'isLoginPage',
+      'isSignupPage'
+    ]),
+    isHomePage () {
+      return (!this.isFrontPage && !this.isLoginPage && !this.isSignupPage)
     }
   },
-  mixins:[
+  mixins: [
     homeMixin
   ],
   components: {
     logoPic,
+    // eslint-disable-next-line vue/no-unused-components
     BIconAlertTriangle,
-    BIconCheckCircle,
+    // eslint-disable-next-line vue/no-unused-components
+    BIconCheckCircle
   },
-  created() {
+  created () {
     this.$store.dispatch('setCurrentPathName', this.$route.name)
   },
   watch: {
-    $route(to, from){
+    $route (to, from) {
       this.$store.dispatch('setCurrentPathName', this.$route.name)
     }
   },
   methods: {
-    scrollToBottom(){
-      let container = document.querySelector('html');
-      let scrollHeight = container.scrollHeight;
-      container.scrollTop = scrollHeight;
+    scrollToBottom () {
+      const container = document.querySelector('html')
+      const scrollHeight = container.scrollHeight
+      container.scrollTop = scrollHeight
     },
-    logout() {
-      this.mixinLogout();
+    logout () {
+      this.mixinLogout()
     }
   }
 }

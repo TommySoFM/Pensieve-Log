@@ -1,13 +1,15 @@
 <template>
   <div class="d-flex flex-wrap justify-content-around align-items-start ">
-    <div class="col-12"> <home :isPanelOpened="isPanelOpened" :togglePanel="togglePanel"/> </div>
+    <div class="col-12">
+      <home :isPanelOpened="isPanelOpened" :togglePanel="togglePanel"/>
+    </div>
     <div class=" col-12">
       <svg class="mt-5" viewBox="0 0 250 250" style="width: 125px; position: fixed" @click="togglePanel">
         <chevron-left class="button-action" style="; cursor: pointer"/>
       </svg>
     </div>
 
-    <div class="my-4 post-container ml-md-4" v-for="post in getPosts">
+    <div class="my-4 post-container ml-md-4" v-for="post in getPosts" :key="post">
       <div class="post-header d-flex">
         <p class="ml-3 mr-1 mb-0">
           <span>#</span>
@@ -79,84 +81,80 @@
   </div>
 </template>
 <script>
-  import axios from "axios";
-  import {mapGetters, mapActions} from 'vuex';
-  import homeMixin from "../mixins/homeMixin";
-  import home from "../components/home"
+import { mapGetters } from 'vuex'
+import homeMixin from '../mixins/homeMixin'
+import home from '../components/home'
 
-  import postLike from '../components/postLike';
-  import postComment from '../components/postComment'
-  import editModal from "../components/modal/editModal";
-  import deleteModal from "../components/modal/deleteModal";
+import postLike from '../components/postLike'
+import postComment from '../components/postComment'
+import editModal from '../components/modal/editModal'
+import deleteModal from '../components/modal/deleteModal'
 
-  import {BIconClockFill, BIconPersonFill, BIconXCircleFill,
-    BIconTerminalFill, BIconXCircle, BIconCheckCircle} from 'bootstrap-vue';
-  import chevronLeft from "../assets/chevron-left.svg"
-  import chevronLeftDisabled from "../assets/chevron-left-disabled.svg"
+import {
+  BIconXCircleFill, BIconTerminalFill, BIconXCircle, BIconCheckCircle
+} from 'bootstrap-vue'
+import chevronLeft from '../assets/chevron-left.svg'
 
-  export default {
-    data(){
-      return{
-        currentPage: this.$route.params.page,
+export default {
+  data () {
+    return {
+      currentPage: this.$route.params.page,
 
-        editPostId: 0,
-        editPostText: '',
-        isPanelOpened: false
-      }
-    },
-    computed: {
-      ...mapGetters([
-        "getUserData",
-        "getPosts"
-      ])
-    },
-    mixins:[
-      homeMixin
-    ],
-    created() {
-      this.mixinGetPosts(this.currentPage - 1);
-    },
-    watch:{
-      $route(to,from){
-        this.mixinGetPosts(to.params.page -1);
-      }
-    },
-    methods:{
-      editPost(id){
-        this.mixinEditPost(id, this.editPostText, this.currentPage);
-        this.editPostId=0
-      },
-      deletePost(id) {
-        this.mixinDeletePost(id, this.currentPage);
-      },
-      clickEdit(postId, postText){
-        this.editPostId=postId;
-        this.editPostText=postText
-      },
-      openModal(id, mode){
-        this.$store.dispatch('setModal',{id: id, mode: mode});
-        this.$store.dispatch('modalOn');
-      },
-      togglePanel(){
-        this.isPanelOpened = !this.isPanelOpened;
-      }
-    },
-    components:{
-      home: home,
-      postLike: postLike,
-      postComment: postComment,
-      deleteConfirm :deleteModal,
-      editConfirm: editModal,
-      BIconClockFill,
-      BIconPersonFill,
-      BIconXCircleFill,
-      BIconTerminalFill,
-      BIconXCircle,
-      BIconCheckCircle,
-      chevronLeft,
-      chevronLeftDisabled
+      editPostId: 0,
+      editPostText: '',
+      isPanelOpened: false
     }
+  },
+  computed: {
+    ...mapGetters([
+      'getUserData',
+      'getPosts'
+    ])
+  },
+  mixins: [
+    homeMixin
+  ],
+  created () {
+    this.mixinGetPosts(this.currentPage - 1)
+  },
+  watch: {
+    $route (to, from) {
+      this.mixinGetPosts(to.params.page - 1)
+    }
+  },
+  methods: {
+    editPost (id) {
+      this.mixinEditPost(id, this.editPostText, this.currentPage)
+      this.editPostId = 0
+    },
+    deletePost (id) {
+      this.mixinDeletePost(id, this.currentPage)
+    },
+    clickEdit (postId, postText) {
+      this.editPostId = postId
+      this.editPostText = postText
+    },
+    openModal (id, mode) {
+      this.$store.dispatch('setModal', { id: id, mode: mode })
+      this.$store.dispatch('modalOn')
+    },
+    togglePanel () {
+      this.isPanelOpened = !this.isPanelOpened
+    }
+  },
+  components: {
+    home: home,
+    postLike: postLike,
+    postComment: postComment,
+    deleteConfirm: deleteModal,
+    editConfirm: editModal,
+    BIconXCircleFill,
+    BIconTerminalFill,
+    BIconXCircle,
+    BIconCheckCircle,
+    chevronLeft
   }
+}
 </script>
 <style>
   .post-container{

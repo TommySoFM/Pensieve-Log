@@ -1,10 +1,10 @@
 const state = {
-  currentPathName: '',
-};
+  currentPathName: ''
+}
 
 const getters = {
   getCurrentPathName: (state) => {
-    return state.currentPathName;
+    return state.currentPathName
   },
   isFrontPage: (state) => {
     return state.currentPathName === 'front'
@@ -15,19 +15,19 @@ const getters = {
   isSignupPage: (state) => {
     return state.currentPathName === 'signup'
   }
-};
+}
 
 const mutations = {
   setCurrentPathName: (state, payload) => {
     state.currentPathName = payload
   }
-};
+}
 
 const actions = {
-  setCurrentPathName: ({commit}, payload) => {
+  setCurrentPathName: ({ commit }, payload) => {
     commit('setCurrentPathName', payload)
   }
-};
+}
 
 export default {
   state,

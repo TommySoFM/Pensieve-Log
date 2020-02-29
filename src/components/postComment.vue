@@ -1,7 +1,7 @@
 <template>
   <div class="my-5">
     <div class="d-flex flex-column-reverse" >
-      <div class="mx-5 mb-4 d-flex flex-column" v-for="comment in selectedComments">
+      <div class="mx-5 mb-4 d-flex flex-column" v-for="comment in selectedComments" :key="comment">
         <div class="d-flex">
           <div class=" font-weight-bolder"> {{comment.username}} : </div>
           <div class="post-time ml-auto">{{comment.creation_timestamp | moment("from", "now", true)}} ago </div>
@@ -35,67 +35,72 @@
   </div>
 </template>
 <script>
-  import homeMixin from "../mixins/homeMixin";
-  import {BIconChevronRight} from 'bootstrap-vue';
+import homeMixin from '../mixins/homeMixin'
+import { BIconChevronRight } from 'bootstrap-vue'
 
-  export default {
-    data(){
-      return{
-        commentSelector: -3,
-        newCommentText:'',
-        isLastPage: false,
-        isFirstPage: true
-      }
-    },
-    computed:{
-      commentsCount(){
-        return this.postData.postComments.length;
-      },
-      totalPage(){
-        return Math.floor(this.commentsCount/3)
-      },
-      selectedComments(){
-        if(this.commentsCount > 3){
-          return this.postData.postComments.slice(this.commentSelector);
-        } else{
-          this.isLastPage = true;
-          return this.postData.postComments;
-        }
-      }
-    },
-    props:[
-      'postData',
-      'currentPage'
-    ],
-    mixins:[
-      homeMixin
-    ],
-    watch:{
-      commentSelector(){
-        this.isLastPage = this.commentsCount + this.commentSelector <= 0;
-      },
-      postData(){
-        this.isLastPage = this.commentsCount + this.commentSelector <= 0;
-      }
-    },
-    methods:{
-      loadOption(val){
-        this.commentSelector -= val;
-      },
-      newComment(){
-        if (RegExp('(?=.*?[a-zA-Z0-9]).+').test(this.newCommentText)) {
-          this.mixinNewComment(this.postData.id, this.newCommentText, this.currentPage);
-        } else {
-          this.$notify({group: 'notice-app', type:'error', title: 'Failed!' , duration: 3000,
-            text: "Comment should contain at least one word!"});
-          document.getElementById('textarea').focus();
-        }
-      }
-    },
-    components:{
-      BIconChevronRight
+export default {
+  data () {
+    return {
+      commentSelector: -3,
+      newCommentText: '',
+      isLastPage: false,
+      isFirstPage: true
     }
+  },
+  computed: {
+    commentsCount () {
+      return this.postData.postComments.length
+    },
+    totalPage () {
+      return Math.floor(this.commentsCount / 3)
+    },
+    selectedComments () {
+      if (this.commentsCount > 3) {
+        return this.postData.postComments.slice(this.commentSelector)
+      } else {
+        this.isLastPage = true
+        return this.postData.postComments
+      }
+    }
+  },
+  props: [
+    'postData',
+    'currentPage'
+  ],
+  mixins: [
+    homeMixin
+  ],
+  watch: {
+    commentSelector () {
+      this.isLastPage = this.commentsCount + this.commentSelector <= 0
+    },
+    postData () {
+      this.isLastPage = this.commentsCount + this.commentSelector <= 0
+    }
+  },
+  methods: {
+    loadOption (val) {
+      this.commentSelector -= val
+    },
+    newComment () {
+      if (RegExp('(?=.*?[a-zA-Z0-9]).+').test(this.newCommentText)) {
+        this.mixinNewComment(this.postData.id, this.newCommentText, this.currentPage)
+      } else {
+        this.$notify({
+          group: 'notice-app',
+          type: 'error',
+          title: 'Failed!',
+          duration: 3000,
+          text: 'Comment should contain at least one word!'
+        })
+        document.getElementById('textarea').focus()
+      }
+    }
+  },
+  components: {
+    BIconChevronRight
   }
+}
 </script>
 <style>
   .comment-box{
