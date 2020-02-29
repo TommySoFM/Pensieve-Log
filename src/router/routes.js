@@ -1,7 +1,7 @@
 import front from '../view/front'
 import signup from '../view/signup'
 import login from '../view/login'
-import home from '../view/home'
+import home from '../components/home'
 import post from '../view/post'
 
 export const routes = [

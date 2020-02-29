@@ -44,7 +44,7 @@
           <p class="mx-auto my-1 font-weight-bolder">{{post.postComments.length}} Comment<span v-if="post.postComments.length>1">s</span></p>
         </div>
       </div>
-      <post-comment :postData="post"/>
+      <post-comment :postData="post" :currentPage="currentPage"/>
     </div>
     <delete-confirm :modal-message="'You are going to delete this post'" :modal-action="deletePost"/>
     <edit-confirm :modal-message="'You are going to make change to the post'" :modal-action="editPost"/>
@@ -82,7 +82,7 @@
   import axios from "axios";
   import {mapGetters, mapActions} from 'vuex';
   import homeMixin from "../mixins/homeMixin";
-  import home from "./home"
+  import home from "../components/home"
 
   import postLike from '../components/postLike';
   import postComment from '../components/postComment'
@@ -126,7 +126,7 @@
         this.mixinEditPost(id, this.editPostText);
       },
       deletePost(id) {
-        this.mixinDeletePost(id);
+        this.mixinDeletePost(id, this.currentPage);
       },
       clickEdit(postId, postText){
         this.editPostId=postId;

@@ -64,7 +64,8 @@
       }
     },
     props:[
-      'postData'
+      'postData',
+      'currentPage'
     ],
     mixins:[
       homeMixin
@@ -82,8 +83,8 @@
         this.commentSelector -= val;
       },
       newComment(){
-        if (this.newCommentText.match('(?=.*?[a-zA-Z0-9]).{1,}')) {
-          this.mixinNewComment(this.postData.id, this.newCommentText);
+        if (RegExp('(?=.*?[a-zA-Z0-9]).+').test(this.newCommentText)) {
+          this.mixinNewComment(this.postData.id, this.newCommentText, this.currentPage);
         } else {
           this.$notify({group: 'notice-app', type:'error', title: 'Failed!' , duration: 3000,
             text: "Comment should contain at least one word!"});

@@ -49,7 +49,7 @@
     </div>
 </template>
 <script>
-  import frontMixin from "../mixins/frontMixin";
+  import homeMixin from "../mixins/homeMixin";
   import {mapGetters} from "vuex";
   import arrowLeft from "../assets/arrow-left.svg";
   import arrowRight from "../assets/arrow-right.svg";
@@ -93,7 +93,7 @@
       }
     },
     mixins:[
-      frontMixin
+      homeMixin
     ],
     components: {
       arrowLeft,
@@ -110,7 +110,7 @@
     },
     methods: {
       newPost() {
-        if (this.postText.match('(?=.*?[a-zA-Z0-9\\W]).{1,}')) {
+        if (RegExp('(?=.*?[a-zA-Z0-9\\W]).+').test(this.postText)) {
           this.mixinNewPost(this.postText);
         } else {
           this.$notify({group: 'notice-app', type:'error', title: 'Failed!' , duration: 3000,
