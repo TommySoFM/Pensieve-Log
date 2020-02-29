@@ -1,5 +1,5 @@
 <template>
-  <div class="col-8 col-lg-4 col-xl-3 mx-auto mx-lg-0 form-bg-color">
+  <div class="col-8 col-lg-4 col-xl-3 mx-auto mx-lg-0 form-border">
     <b-form class="form-login">
       <div class="mb-4">
         <b-form-group label="Username">

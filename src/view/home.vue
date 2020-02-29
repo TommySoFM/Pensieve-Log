@@ -1,80 +1,52 @@
 <template>
-  <div class="container-fluid d-flex">
-    <div class="home-panel col-4 mr-auto" style="border-right: 3px solid #777777;
-    background-image: linear-gradient(to left , rgba(175,175,175,0.16), #fff)">
-      <h2 class="mt-5 text-center">Hello {{ getUserData.username }} </h2>
-
-      <b-form class="col-10 ml-4 my-5">
-        <div class="textbox-heading">
-          <p class="font-weight-bolder m-0">New Thought:</p>
+    <div class="home-panel mr-auto d-flex" v-if="isPanelOpened">
+      <div class="col-10" style="background: white; border-right: 8px groove #adb7bf">
+        <h2 class="mt-5 text-center"> Control Panel </h2>
+        <div class="post-divider col-6 mx-auto mt-3"/>
+        <b-form class="col-10 ml-4 my-4">
+          <div class="textbox-heading">
+            <p class="font-weight-bolder m-0">New Thought:</p>
+          </div>
+          <b-form-textarea class="textbox p-3" v-model="postText" placeholder="Type to Share Your Thought" rows="4" max-rows="6"/>
+        </b-form>
+        <div class="clearfix text-center font-weight-bolder">
+          <span class="button-action">
+            <h5 class="button button-confirm float-left col-4 py-2 ml-5" @click="newPost">Post</h5>
+          </span>
+          <span :class="{'button-action': this.postText!=='' }">
+           <h5 class="button float-left offset-1 col-4 py-2" :class="[this.postText!=='' ? 'button-reset' : 'button-disabled']" @click="reset">Reset</h5>
+          </span>
         </div>
-        <b-form-textarea class="textbox p-3" v-model="postText" placeholder="Type to Share Your Thought" rows="4" max-rows="6"/>
-      </b-form>
-      <div class="clearfix text-center font-weight-bolder">
-        <span class="button-action">
-          <h5 class="button button-confirm float-left col-4 py-2 ml-5" @click="newPost">Post</h5>
-        </span>
-        <span :class="{'button-action': this.postText!=='' }">
-         <h5 class="button float-left offset-1 col-4 py-2" :class="[this.postText!=='' ? 'button-reset' : 'button-disabled']" @click="reset">Reset</h5>
-        </span>
+        <div class="d-flex align-items-center mt-5 mb-2">
+          <svg v-if="isFirstPage" class="col-4 nav-arrow p-0 ml-4" viewBox="0 -35 230 230">
+            <arrow-left-disabled/>
+          </svg>
+          <router-link tag="svg" :to="previous" v-else class="nav-arrow nav-arrow-active col-4 p-0 ml-4" viewBox="0 -35 230 230">
+            <arrow-left/>
+          </router-link>
+          <b-form-select class="page-selector col-2" v-model="selectedPage" @change="changePage(selectedPage)">
+            <b-form-select-option :value="null" disabled>Page</b-form-select-option>
+            <template v-for="page in getTotalPages" >
+              <option :value="page">{{page}}</option>
+            </template>
+          </b-form-select>
+          <svg v-if="isLastPage" class="nav-arrow col-4 p-0" viewBox="0 -35 230 230">
+           <arrow-right-disabled/>
+          </svg>
+          <router-link tag="svg" :to="next" v-else class="nav-arrow nav-arrow-active col-4 p-0" viewBox="0 -35 230 230">
+            <arrow-right/>
+          </router-link>
+        </div>
+        <div class="col-8 offset-2 pl-5 font-weight-bolder">
+          <h4>Page: {{getCurrentPage + 1}}/{{getTotalPages}} </h4>
+        </div>
       </div>
-      <div class="d-flex align-items-center mt-5 mb-2">
-        <svg v-if="isFirstPage" class="col-4 nav-arrow p-0 ml-4" viewBox="0 -35 230 230">
-          <arrow-left-disabled/>
+      <div class="col-3 p-0 mt-5">
+        <svg viewBox="0 0 250 250" @click="togglePanel" style="transform: translateX(-70px)">
+          <chivron-right class="button-action" style="cursor: pointer"/>
         </svg>
-        <router-link tag="svg" :to="previous" v-else class="nav-arrow nav-arrow-active col-4 p-0 ml-4" viewBox="0 -35 230 230">
-          <arrow-left/>
-        </router-link>
-        <b-form-select class="page-selector col-2" v-model="selectedPage" @change="changePage(selectedPage)">
-          <b-form-select-option :value="null" disabled>Page</b-form-select-option>
-          <template v-for="page in getTotalPages" >
-            <option :value="page">{{page}}</option>
-          </template>
-        </b-form-select>
-        <svg v-if="isLastPage" class="nav-arrow col-4 p-0" viewBox="0 -35 230 230">
-         <arrow-right-disabled/>
-        </svg>
-        <router-link tag="svg" :to="next" v-else class="nav-arrow nav-arrow-active col-4 p-0" viewBox="0 -35 230 230">
-          <arrow-right/>
-        </router-link>
-      </div>
-      <div class="col-8 offset-3 pl-5 font-weight-bolder">
-        <h4>Page: {{getCurrentPage + 1}}/{{getTotalPages}} </h4>
       </div>
     </div>
-
-    <div class="col-8">
-      <router-view/>
-    </div>
-
-    <!--Pop-up Notice-->
-    <notifications group="notice-app"
-                   :width="500"
-                   animation-name="v-fade-left"
-                   position="center left">
-      <template slot="body" slot-scope="props">
-        <div class="custom-template"
-             :class="{ 'notice-error-container' : props.item.type === 'error'}">
-          <div class="custom-template-icon"
-               :class="{ 'notice-error-icon' : props.item.type === 'error'}">
-            <b-icon-check-circle v-if="props.item.type === 'success'"/>
-            <b-icon-alert-triangle v-if="props.item.type === 'error'"/>
-          </div>
-          <div class="custom-template-content">
-            <div class="custom-template-title"
-                 :class="{ 'notice-error-title' : props.item.type === 'error'}">
-              {{props.item.title}}
-            </div>
-
-            <div class="custom-template-text">
-              {{props.item.text}}
-            </div>
-          </div>
-          <div class="custom-template-close"> </div>
-        </div>
-      </template>
-    </notifications>
-  </div>
 </template>
 <script>
   import frontMixin from "../mixins/frontMixin";
@@ -83,6 +55,8 @@
   import arrowRight from "../assets/arrow-right.svg";
   import arrowLeftDisabled from "../assets/arrow-left-disabled.svg"
   import arrowRightDisabled from "../assets/arrow-right-disabled.svg"
+  import chivronRight from "../assets/chevron-right.svg"
+  import chivronRightDisabled from "../assets/chevron-right-disabled.svg"
 
   export default{
     data: function () {
@@ -92,6 +66,10 @@
         selectedPage:this.$route.params.page
       }
     },
+    props:[
+      'isPanelOpened',
+      'togglePanel'
+    ],
     computed: {
       ...mapGetters([
         "getUserData",
@@ -100,11 +78,11 @@
         "getRandomId"
       ]),
       next() {
-        let targetPage = '/home/post/' + (this.getCurrentPage + 2).toString();
+        let targetPage = '/post/' + (this.getCurrentPage + 2).toString();
         return targetPage;
       },
       previous() {
-        let targetPage = '/home/post/' + (this.getCurrentPage).toString();
+        let targetPage = '/post/' + (this.getCurrentPage).toString();
         return targetPage;
       },
       isFirstPage(){
@@ -121,7 +99,9 @@
       arrowLeft,
       arrowRight,
       arrowLeftDisabled,
-      arrowRightDisabled
+      arrowRightDisabled,
+      chivronRight,
+      chivronRightDisabled
     },
     watch: {
       $route(to,from){
@@ -138,7 +118,7 @@
         }
       },
       changePage(page){
-        this.$router.push('/home/post/'+page)
+        this.$router.push('/post/'+page)
       },
       reset(){
         this.postText = '';
@@ -148,7 +128,11 @@
 </script>
 <style>
   .home-panel{
-    height: 90vh;
+    height: 100vh;
+    width: 450px;
+    position: fixed;
+    left: 0;
+    z-index: 2;
   }
   .textbox-heading{
     margin-top: 30px;
@@ -191,6 +175,7 @@
     border: 4px solid #004662;
     border-radius: .5rem;
     vertical-align: center;
+    padding-right: 10px;
   }
   .page-selector:focus{
     border: 4px solid #004662;

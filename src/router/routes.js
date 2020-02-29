@@ -11,11 +11,7 @@ export const routes = [
       { path: '/signup', name: 'signup' , component: signup },
     ]
   },
-  { path: '/home', name: 'home', component: home,
-    children:[
-      // {path: 'post',name: 'post', component: post}
-      {path: 'post/:page',name: 'post', component: post}
-    ]
-  },
+  {path: '/post/:page',name: 'post', component: post},
+  { path: '/home', name: 'home', component: home},
   { path: '*', redirect: '/log_in'}
 ]

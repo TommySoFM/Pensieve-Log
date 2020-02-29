@@ -1,6 +1,13 @@
 <template>
-  <div class="d-flex flex-wrap justify-content-around align-items-start" style="height: 90vh; overflow: scroll">
-    <div class="col-7 post-container" v-for="post in getPosts">
+  <div class="d-flex flex-wrap justify-content-around align-items-start ">
+    <div class="col-12"> <home :isPanelOpened="isPanelOpened" :togglePanel="togglePanel"/> </div>
+    <div class=" col-12">
+      <svg class="mt-5" viewBox="0 0 250 250" style="width: 125px; position: fixed" @click="togglePanel">
+        <chevron-left class="button-action" style="; cursor: pointer"/>
+      </svg>
+    </div>
+
+    <div class="my-4 post-container ml-md-4" v-for="post in getPosts">
       <div class="post-header d-flex">
         <p class="ml-3 mr-1 mb-0">
           <span>#</span>
@@ -27,6 +34,7 @@
         <b-form-textarea class="pl-3" ows="3" max-rows="5" plaintext :value="post.postText"/>
       </div>
       <div class="post-divider col-10 mx-auto my-3"/>
+
       <div class="d-flex">
         <div class="post-like-button flex-grow-1 text-center ml-5">
           <post-like :postData="post"/>
@@ -40,12 +48,41 @@
     </div>
     <delete-confirm :modal-message="'You are going to delete this post'" :modal-action="deletePost"/>
     <edit-confirm :modal-message="'You are going to make change to the post'" :modal-action="editPost"/>
+
+    <!--Pop-up Notice-->
+    <notifications group="notice-app"
+                   :width="500"
+                   animation-name="v-fade-left"
+                   position="center left">
+      <template slot="body" slot-scope="props">
+        <div class="custom-template"
+             :class="{ 'notice-error-container' : props.item.type === 'error'}">
+          <div class="custom-template-icon"
+               :class="{ 'notice-error-icon' : props.item.type === 'error'}">
+            <b-icon-check-circle v-if="props.item.type === 'success'"/>
+            <b-icon-alert-triangle v-if="props.item.type === 'error'"/>
+          </div>
+          <div class="custom-template-content">
+            <div class="custom-template-title"
+                 :class="{ 'notice-error-title' : props.item.type === 'error'}">
+              {{props.item.title}}
+            </div>
+
+            <div class="custom-template-text">
+              {{props.item.text}}
+            </div>
+          </div>
+          <div class="custom-template-close"> </div>
+        </div>
+      </template>
+    </notifications>
   </div>
 </template>
 <script>
   import axios from "axios";
   import {mapGetters, mapActions} from 'vuex';
   import homeMixin from "../mixins/homeMixin";
+  import home from "./home"
 
   import postLike from '../components/postLike';
   import postComment from '../components/postComment'
@@ -54,6 +91,8 @@
 
   import {BIconClockFill, BIconPersonFill, BIconXCircleFill,
     BIconTerminalFill, BIconXCircle, BIconCheckCircle} from 'bootstrap-vue';
+  import chevronLeft from "../assets/chevron-left.svg"
+  import chevronLeftDisabled from "../assets/chevron-left-disabled.svg"
 
   export default {
     data(){
@@ -61,7 +100,8 @@
         currentPage: this.$route.params.page,
 
         editPostId: 0,
-        editPostText: ''
+        editPostText: '',
+        isPanelOpened: false
       }
     },
     computed: {
@@ -96,8 +136,12 @@
         this.$store.dispatch('setModal',{id: id, mode: mode});
         this.$store.dispatch('modalOn');
       },
+      togglePanel(){
+        this.isPanelOpened = !this.isPanelOpened;
+      }
     },
     components:{
+      home: home,
       postLike: postLike,
       postComment: postComment,
       deleteConfirm :deleteModal,
@@ -108,11 +152,14 @@
       BIconTerminalFill,
       BIconXCircle,
       BIconCheckCircle,
+      chevronLeft,
+      chevronLeftDisabled
     }
   }
 </script>
 <style>
   .post-container{
+    width: 350px;
     border-radius: 50px;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
     padding-top: 30px;
@@ -205,14 +252,13 @@
   }
   .post-like-button{
     height: 30px;
-    background-image: radial-gradient(ellipse at top right ,#ffffff, #f5f5f5);
-    border-radius: 10px;
-    box-shadow: 0 9px 15px 5px #ebebeb;
+    border-radius: 4px;
+    border-left: 2px solid #adb7bf;
+    cursor: pointer;
   }
   .post-comment-button{
     height: 30px;
-    background-image: radial-gradient(ellipse at top left ,#ffffff, #f5f5f5);
-    border-radius: 10px;
-    box-shadow: 0 9px 15px 5px #ebebeb;
+    border-radius: 4px;
+    border-right: 2px solid #adb7bf;
   }
 </style>

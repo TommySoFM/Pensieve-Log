@@ -1,5 +1,5 @@
 <template>
-  <div class="col-8 col-lg-4 col-xl-3 mx-auto mx-lg-0 form-bg-color">
+  <div class="col-8 col-lg-4 col-xl-3 mx-auto mx-lg-0 form-border">
     <b-form class="form-signup">
       <div class="mb-3">
         <b-form-group label="Username" description="*Length 6-20 characters long.">

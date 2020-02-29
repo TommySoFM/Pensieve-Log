@@ -10,21 +10,22 @@
       <nav class="nav-indication col-2 mr-5 d-none d-lg-inline-block">
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isLoginPage">Login</router-link>
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isSignupPage">Sign-up</router-link>
-        <h5 class="text-center border-left border-right" style="cursor: pointer" @click="logout" v-if="!isFrontPage && !isLoginPage && !isSignupPage">Logout</h5>
+        <h5 class="text-center border-left border-right" style="cursor: pointer" @click="logout" v-if="isHomePage">Logout</h5>
       </nav>
       <div class="col-1 d-none d-lg-inline-block"></div>
-      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0" @click="scrollToBottom">
+      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0 " @click="scrollToBottom">
         <div class="border-left"/>
-        <router-link tag="div" to="/" class="nav-header flex-grow-1 text-center" v-if="!isFrontPage && !isLoginPage && !isSignupPage">
+        <h5 to="/" class="nav-header flex-grow-1 text-center pt-3" v-if="isHomePage" @click="logout">
           Logout
-        </router-link>
-        <router-link tag="div" to="/login" class="nav-header flex-grow-1 text-center" v-if="isFrontPage || isLoginPage || isSignupPage">
+        </h5>
+        <router-link tag="h5" to="/login" class="nav-header flex-grow-1 text-center pt-3" v-if="!isHomePage">
           Log-in
         </router-link>
         <div class="border-left"/>
-        <router-link tag="div" to="/signup" class="nav-header flex-grow-1 text-center" v-if="isFrontPage || isLoginPage || isSignupPage">
+        <router-link tag="h5" to="/signup" class="nav-header flex-grow-1 text-center pt-3" v-if="!isHomePage">
           Sign-up
         </router-link>
+        <div class="border-left"/>
       </nav>
     </div>
     <div class="web-body">
@@ -51,8 +52,10 @@ export default {
         'isFrontPage',
         'isLoginPage',
         'isSignupPage',
-        'isHomePage'
-      ])
+      ]),
+    isHomePage(){
+        return (!this.isFrontPage && !this.isLoginPage && !this.isSignupPage)
+    }
   },
   mixins:[
     homeMixin
@@ -190,9 +193,8 @@ export default {
       height: 90vh;
       padding-top: 15vh;
     }
-    .form-bg-color{
+    .form-border{
       border-top: 3px groove #004662;
-      background-image: linear-gradient(to top, rgba(138, 126, 112, 0.12), #fafafa);
     }
   }
 

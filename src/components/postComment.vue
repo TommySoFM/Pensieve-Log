@@ -1,21 +1,21 @@
 <template>
   <div class="my-5">
-    <div class="d-flex flex-column-reverse">
+    <div class="d-flex flex-column-reverse" >
       <div class="mx-5 mb-4 d-flex flex-column" v-for="comment in selectedComments">
         <div class="d-flex">
           <div class=" font-weight-bolder"> {{comment.username}} : </div>
           <div class="post-time ml-auto">{{comment.creation_timestamp | moment("from", "now", true)}} ago </div>
         </div>
-        <div class="comment-box align-self-end mr-4">
+        <div class="comment-box mr-2 align-self-end" >
           <p class="my-2 ml-4 mr-auto"> {{comment.commentText}} </p>
         </div>
       </div>
     </div>
 
     <div class="d-flex px-5 mb-n3">
-      <p class="mx-auto mb-0" v-show="!isLastPage" @click="loadOption(3)">Show More</p>
+      <p class="mx-auto mb-0" v-show="!isLastPage" @click="loadOption(3)" style="cursor: pointer">Show More</p>
       <div class="border-left" v-show="!isLastPage && commentSelector !== -3"/>
-      <p class="mx-auto  mb-0" v-show="commentSelector !== -3" @click="loadOption(-3)">Show Less</p>
+      <p class="mx-auto  mb-0" v-show="commentSelector !== -3" @click="loadOption(-3)" style="cursor: pointer">Show Less</p>
     </div>
     <div class="post-divider col-7 mx-auto my-4"/>
 
@@ -98,7 +98,7 @@
 </script>
 <style>
   .comment-box{
-    width: 75%;
+    width: 95%;
     background: rgba(235, 235, 235, 0.30);
     border: 1px groove rgba(0,70,98,0.5);
     border-radius: 50px;

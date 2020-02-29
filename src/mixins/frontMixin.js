@@ -16,7 +16,7 @@ export default {
       axios.post(targetUrl, formData)
         .then( response => {
           if(response.status === 200){
-            this.$router.push("/home/post/1")
+            this.$router.push("/post/1")
           }
         }).catch( error => {
             console.log(error);
