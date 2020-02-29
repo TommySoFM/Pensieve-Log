@@ -1,7 +1,7 @@
 <template>
   <div v-if="getDeleteModalSwitch">
     <div class="custom-modal-background" @click="modalOff"></div>
-    <div class="custom-modal-box">
+    <div class="custom-modal-box offset-xl-3 offset-xl-2 offset-md-1">
 
       <div class="custom-modal-container">
         <div class="custom-modal-header">
@@ -57,7 +57,7 @@
 </script>
 <style>
   .custom-modal-background {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 2;
@@ -65,17 +65,12 @@
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.5);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
     /*animation: onShow .3s ease-in-out;*/
   }
 
   .custom-modal-box {
-    position: absolute;
-    top: 10vh;
-    left: 50vh;
+    position: fixed;
+    top: 20vh;
     z-index: 3;
 
     height:100px;
@@ -157,29 +152,29 @@
     100% {opacity: 100%}
   }
 
-  @media only screen and (max-width: 1130px) and (min-width: 661px){
-    .custom-modal-box{
-      left: 0 !important;
-    }
-  }
+  /*@media only screen and (max-width: 1130px) and (min-width: 661px){*/
+  /*  .custom-modal-box{*/
+  /*    left: 0 !important;*/
+  /*  }*/
+  /*}*/
 
-  @media only screen and (max-width:660px){
-    .custom-modal-background{
-      height: 400vh;
-      z-index: 5;
-    }
-    .custom-modal-box{
-      position: fixed;
-      z-index: 6;
-      top: 20%;
-      left: -30%;
-      transform: scale(0.55);
-    }
-  }
-  @media only screen and (max-width:353px){
-    .custom-modal-box{
-      left: -43%;
-      transform: scale(0.5);
-    }
-  }
+  /*@media only screen and (max-width:660px){*/
+  /*  .custom-modal-background{*/
+  /*    height: 400vh;*/
+  /*    z-index: 5;*/
+  /*  }*/
+  /*  .custom-modal-box{*/
+  /*    position: fixed;*/
+  /*    z-index: 6;*/
+  /*    top: 20%;*/
+  /*    left: -30%;*/
+  /*    transform: scale(0.55);*/
+  /*  }*/
+  /*}*/
+  /*@media only screen and (max-width:353px){*/
+  /*  .custom-modal-box{*/
+  /*    left: -43%;*/
+  /*    transform: scale(0.5);*/
+  /*  }*/
+  /*}*/
 </style>

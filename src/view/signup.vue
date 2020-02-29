@@ -113,6 +113,7 @@
     methods:{
       submit() {
         this.checkAllEntryFormat();
+        console.log(Object.keys(this.validation).forEach((key)=>{console.log(key+": "+this.validation[key])}));
         if(this.isAllValid){
           this.mixinAddUser(this.entry.username, this.entry.password);
           this.reset()
@@ -144,17 +145,10 @@
         let targetKey = Object.keys(this.validation)[key];
 
         if(mode === 'match'){
-          qualifier = RegExp(format).test(entry);
+          this.validation[targetKey] = RegExp(format).test(entry);
         } else if (mode === 'equals'){
-          qualifier = (entry === format);
+          this.validation[targetKey] = (entry === format);
         }
-
-        if(qualifier === true){
-          setTimeout(()=>{this.validation[targetKey] = true}, 300);
-        }
-        else {
-          setTimeout(()=>{this.validation[targetKey] = false}, 300);
-        };
       },
       checkAllEntryFormat(){
         this.isFormatCorrect(this.username,this.format.username, 1, 'match');

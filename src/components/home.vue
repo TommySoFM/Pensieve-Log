@@ -1,6 +1,6 @@
 <template>
     <div class="home-panel mr-auto d-flex" v-if="isPanelOpened">
-      <div class="col-10" style="background: white; border-right: 8px groove #adb7bf">
+      <div class="col-10" style="background: rgba(241,241,241,0.96); border-right: 8px groove #adb7bf">
         <h2 class="mt-5 text-center"> Control Panel </h2>
         <div class="post-divider col-6 mx-auto mt-3"/>
         <b-form class="col-10 ml-4 my-4">
@@ -143,13 +143,13 @@
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
   }
   .textbox{
-    background-color: rgba(252, 255, 242, 0.2);
+    background-color: #f9f9f9;
     border-color: #fcfff2 ;
     border-radius: 0 0 20px 20px;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
   }
   .textbox:focus{
-    background-color: rgba(252, 255, 242, 0.2);
+    background-color: white;
     border-color: white;
     box-shadow: 0px 3px 10px rgba(107, 107, 107, 0.2);
     -webkit-box-shadow: 0px 3px 10px rgba(107, 107, 107, 0.2);
@@ -180,5 +180,9 @@
   .page-selector:focus{
     border: 4px solid #004662;
     box-shadow: 0 0 0 0.2rem #fcfff2;
+  }
+  .button-reset,
+  .button-confirm{
+    background-color: white;
   }
 </style>

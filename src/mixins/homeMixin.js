@@ -41,7 +41,7 @@ export default {
         })
     },
 
-    mixinEditPost(postId, postText){
+    mixinEditPost(postId, postText, currentPage){
       let targetUrl = this.getServerUrl + '/post/' + postId;
       const formData = new FormData;
       formData.append("postText", postText);
@@ -49,7 +49,7 @@ export default {
         .then(response => {
           this.$notify({group: 'notice-app', type:'success', title: 'Success!' , duration: 1250,
             text: response.data});
-          setTimeout(()=>{this.$router.go(0)},2000);
+          this.mixinGetPosts(currentPage-1);
         }).catch(error => {
         this.$notify({group: 'notice-app', type:'error', title: 'Failed!' , duration: 3000,
           text: error.response.data})

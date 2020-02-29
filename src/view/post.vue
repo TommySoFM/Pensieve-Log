@@ -46,8 +46,8 @@
       </div>
       <post-comment :postData="post" :currentPage="currentPage"/>
     </div>
-    <delete-confirm :modal-message="'You are going to delete this post'" :modal-action="deletePost"/>
-    <edit-confirm :modal-message="'You are going to make change to the post'" :modal-action="editPost"/>
+    <delete-confirm class="col-12" :modal-message="'You are going to delete this post'" :modal-action="deletePost"/>
+    <edit-confirm class="col-12" :modal-message="'You are going to make change to the post'" :modal-action="editPost"/>
 
     <!--Pop-up Notice-->
     <notifications group="notice-app"
@@ -123,7 +123,8 @@
     },
     methods:{
       editPost(id){
-        this.mixinEditPost(id, this.editPostText);
+        this.mixinEditPost(id, this.editPostText, this.currentPage);
+        this.editPostId=0
       },
       deletePost(id) {
         this.mixinDeletePost(id, this.currentPage);

@@ -1,7 +1,7 @@
 <template>
   <div v-if="getEditModalSwitch">
     <div class="custom-modal-background" @click="modalOff"></div>
-    <div class="custom-modal-box">
+    <div class="custom-modal-box offset-xl-3 offset-xl-2 offset-md-1">
 
       <div class="custom-modal-container">
         <div class="custom-modal-header">
@@ -57,7 +57,7 @@
 </script>
 <style>
   .custom-modal-background {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 2;
@@ -65,17 +65,12 @@
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.5);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
     /*animation: onShow .3s ease-in-out;*/
   }
 
   .custom-modal-box {
-    position: absolute;
-    top: 10vh;
-    left: 50vh;
+    position: fixed;
+    top: 20vh;
     z-index: 3;
 
     height:100px;

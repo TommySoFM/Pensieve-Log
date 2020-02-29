@@ -34,7 +34,7 @@ export default {
         .then(resource => {
           this.$notify({group: 'notice-app', type:'success', title: 'Success!' , duration: 2250,
             text: 'Redirect to Login Page in 3 Second...'});
-          setTimeout(()=>{this.$router.push('/log_in')}, 3000);
+          setTimeout(()=>{this.$router.push('/login')}, 3000);
         })
         .catch(error => {
           console.log(error.response.data.message);
