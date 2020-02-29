@@ -182,6 +182,9 @@ export default {
     .line-bottom{
       font-size: 2.5rem;
     }
+    .custom-template{
+      transform: translateX(-50px) scale(0.8);
+    }
   }
   /* Apply to md-size or below */
   @media screen and (max-width: 992px){

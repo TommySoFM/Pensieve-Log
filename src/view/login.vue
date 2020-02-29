@@ -13,7 +13,7 @@
       </div>
       <div class="clearfix text-center font-weight-bolder mb-5">
         <span class="button-action">
-          <h5 class="button button-confirm float-left col-5 py-2 ml-3" @click="login">Confirm</h5>
+          <h5 class="button button-confirm float-left col-5 py-2 ml-3" @click="login">Enter</h5>
         </span>
         <span :class="{'button-action': !isAllEmpty }">
          <h5 class="button float-left offset-1 col-5 py-2"

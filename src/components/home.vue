@@ -7,7 +7,7 @@
           <div class="textbox-heading">
             <p class="font-weight-bolder m-0">New Thought:</p>
           </div>
-          <b-form-textarea class="textbox p-3" v-model="postText" placeholder="Type to Share Your Thought" rows="4" max-rows="6"/>
+          <b-form-textarea class="textbox p-3" v-model="postText" placeholder="Type to Share" rows="4" max-rows="6"/>
         </b-form>
         <div class="clearfix text-center font-weight-bolder">
           <span class="button-action">
