@@ -1,15 +1,15 @@
 <template>
-  <div class="d-flex flex-wrap justify-content-around align-items-start ">
+  <div class="d-flex flex-wrap justify-content-around align-items-start ml-5">
     <div class="col-12">
       <home :isPanelOpened="isPanelOpened" :togglePanel="togglePanel"/>
     </div>
-    <div class=" col-12">
-      <svg class="mt-5" viewBox="0 0 250 250" style="width: 125px; position: fixed" @click="togglePanel">
-        <chevron-left class="button-action" style="; cursor: pointer"/>
+    <div class="button-action col-12">
+      <svg class="mt-5" viewBox="0 0 350 350" style="width: 100px; position: fixed; transform: translateX(-50px)" @click="togglePanel">
+        <chevron-left style="; cursor: pointer"/>
       </svg>
     </div>
 
-    <div class="my-4 post-container ml-md-4" v-for="post in getPosts" :key="post">
+    <div class="my-4 post-container ml-md-4" v-for="post in getPosts" :key="post.id">
       <div class="post-header d-flex">
         <p class="ml-3 mr-1 mb-0">
           <span>#</span>
@@ -91,7 +91,8 @@ import editModal from '../components/modal/editModal'
 import deleteModal from '../components/modal/deleteModal'
 
 import {
-  BIconXCircleFill, BIconTerminalFill, BIconXCircle, BIconCheckCircle
+  BIconXCircleFill, BIconTerminalFill,
+  BIconXCircle, BIconCheckCircle
 } from 'bootstrap-vue'
 import chevronLeft from '../assets/chevron-left.svg'
 

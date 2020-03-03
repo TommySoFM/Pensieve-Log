@@ -1,7 +1,7 @@
 <template>
   <div class="my-5">
     <div class="d-flex flex-column-reverse" >
-      <div class="mx-5 mb-4 d-flex flex-column" v-for="comment in selectedComments" :key="comment">
+      <div class="mx-5 mb-4 d-flex flex-column" v-for="comment in selectedComments" :key="comment.id">
         <div class="d-flex">
           <div class=" font-weight-bolder"> {{comment.username}} : </div>
           <div class="post-time ml-auto">{{comment.creation_timestamp | moment("from", "now", true)}} ago </div>
@@ -36,7 +36,6 @@
 </template>
 <script>
 import homeMixin from '../mixins/homeMixin'
-import { BIconChevronRight } from 'bootstrap-vue'
 
 export default {
   data () {
@@ -58,6 +57,7 @@ export default {
       if (this.commentsCount > 3) {
         return this.postData.postComments.slice(this.commentSelector)
       } else {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.isLastPage = true
         return this.postData.postComments
       }
@@ -96,9 +96,6 @@ export default {
         document.getElementById('textarea').focus()
       }
     }
-  },
-  components: {
-    BIconChevronRight
   }
 }
 </script>

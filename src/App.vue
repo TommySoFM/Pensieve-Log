@@ -202,6 +202,31 @@ export default {
       border-top: 3px groove #004662;
     }
   }
+  /*<-------- Page Transition ------->  */
+  .app-transition-enter-active {
+    animation: app-enter 1.20s ease-out;
+    animation-fill-mode: forwards;
+  }
+
+  .app-transition-leave-active {
+    animation: app-leave 0.65s ease-in;
+  }
+
+  @keyframes app-leave {
+    0%{ transform: translateX(0); opacity: 100%}
+    30%{ transform: translateX(+5%); opacity: 100%}
+    40%{ transform: translateX(+5%); opacity: 100%}
+    75%{ transform: translateX(0); opacity: 40%}
+    90%{ transform: translateX(-20%); opacity: 10%}
+    100%{ transform: translateX(-40%); opacity: 0%}
+  }
+  @keyframes app-enter {
+    0% { transform: translateX(+40%); opacity: 0%}
+    10% { transform: translateX(+20%); opacity: 10%}
+    25% { transform: translateX(0); opacity: 40%}
+    60% { transform: translateX(-10%); opacity: 100%}
+    100% { transform: translateX(0); opacity: 100%}
+  }
 
   /* Notification Style */
   .custom-template {

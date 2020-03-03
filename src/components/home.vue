@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="col-3 p-0 mt-5">
-        <svg viewBox="0 0 250 250" @click="togglePanel" style="transform: translateX(-70px)">
+        <svg viewBox="0 0 350 350" @click="togglePanel" style="width: 100px; transform: translateX(-60px)">
           <chivron-right class="button-action" style="cursor: pointer"/>
         </svg>
       </div>
