@@ -113,9 +113,7 @@ export default {
   .custom-modal-title {
     font-size: 1.4rem;
     font-weight: 600;
-    color: #fad8a4;
-    letter-spacing: +2.3px;
-    text-shadow: +2.3px 0 #e67e22, -2.3px 0 #e67e22, 0 +2.3px #e67e22, 0 -2.3px #e67e22;
+    color: #e67e22;
   }
 
   .custom-modal-text {

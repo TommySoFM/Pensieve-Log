@@ -2,7 +2,7 @@
   <div class="col-8 col-lg-4 col-xl-3 mx-auto mx-lg-0 form-border">
     <b-form class="form-signup">
       <div class="mb-3">
-        <b-form-group label="Username" description="*Length 6-20 characters long.">
+        <b-form-group label="Username" description="*Length 6-20 characters long, no space allowed.">
           <b-input v-model="entry.username" required :state="validation.isUsernameValid"/>
         </b-form-group>
         <b-form-invalid-feedback :state="validation.isUsernameValid">
@@ -14,7 +14,7 @@
       </div>
       <div class="mb-3">
         <b-form-group label="Password"
-                      description="*Length 8-25 characters long with at least 1 lowercase, 1 uppercase and 1 special unit.">
+                      description="*Length 8-25 characters long with 1 lowercase, 1 uppercase character and no space allowed.">
           <b-input type="password" v-model="entry.password" required :state="validation.isPasswordValid"/>
         </b-form-group>
         <b-form-invalid-feedback :state="validation.isPasswordValid">
@@ -22,8 +22,8 @@
           <ol>
             <li v-show="!validation.isPwWithUppercase">At least 1 Upper-cased character</li>
             <li v-if="!validation.isPwWithLowercase">At least 1 Lower-cased character</li>
-            <li v-if="!validation.isPwWithSpecialUnit">At least 1 Special unit</li>
-            <li v-if="!validation.isPwWithLength">Length between 8-25 units</li>
+            <li v-if="!validation.isPwWithNoSpace">No Space Allowed</li>
+            <li v-if="!validation.isPwWithLength">Length Should Be in 8-25 Units</li>
           </ol>
         </b-form-invalid-feedback>
       </div>
@@ -71,11 +71,11 @@ export default {
         reenter: ''
       },
       format: {
-        username: '(?=.*?[a-zA-Z\\W]).{6,20}',
-        password: '(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\\W]).{8,25}',
+        username: '(?=.*?[a-zA-Z\\W])[^\\s-]{6,20}',
+        password: '(?=.*?[a-z])(?=.*?[A-Z])[^\\s-]{8,25}',
         pw_Lowercase: '(?=.*?[a-z]).{1,}',
         pw_Uppercase: '(?=.*?[A-Z]).{1,}',
-        pw_Special: '(?=.*?[\\W]).{1,}',
+        pw_NoSpace: '^\\S+$',
         pw_Length: '.{8,25}'
       },
       validation: {
@@ -84,7 +84,7 @@ export default {
         isPasswordValid: null,
         isPwWithLowercase: null,
         isPwWithUppercase: null,
-        isPwWithSpecialUnit: null,
+        isPwWithNoSpace: null,
         isPwWithLength: null,
         isPasswordSame: null
       }
@@ -154,7 +154,7 @@ export default {
       this.isFormatCorrect(this.password, this.format.password, 2, 'match')
       this.isFormatCorrect(this.password, this.format.pw_Lowercase, 3, 'match')
       this.isFormatCorrect(this.password, this.format.pw_Uppercase, 4, 'match')
-      this.isFormatCorrect(this.password, this.format.pw_Special, 5, 'match')
+      this.isFormatCorrect(this.password, this.format.pw_NoSpace, 5, 'match')
       this.isFormatCorrect(this.password, this.format.pw_Length, 6, 'match')
       this.isFormatCorrect(this.reenter, this.password, 7, 'equals')
     }

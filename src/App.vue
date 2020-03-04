@@ -177,6 +177,11 @@ export default {
   }
 
   /* Apply to xs-size */
+  @media screen and (max-width: 500px) {
+    .custom-container {
+      transform: translateX(-70px) scale(0.7);
+    }
+  }
   @media screen and (max-width: 768px){
     .line-top{
       font-size: 3.5rem;
@@ -228,66 +233,45 @@ export default {
     100% { transform: translateX(0); opacity: 100%}
   }
 
-  /* Notification Style */
-  .custom-template {
+  /*  ==========================  */
+  /*      Notification Style      */
+  /*  ==========================  */
+  .custom-container {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
     font-size: 12px;
-    height: 8vh;
     margin: 10px 5px 0px 5px;
     align-items: center;
+    border-radius: 20px;
+  }
+  .notice-success-container{
     background: #E8F9F0;
     border: 2px solid #1abc9c;
   }
-
   .notice-error-container {
     background: #fad7d3;
     border: 2px solid #e74c3c;
   }
-
-  .custom-template,
-  .custom-template > div {
-    box-sizing: border-box;
-    border-radius: 20px;
-  }
-  .custom-template-icon {
+  .custom-icon {
     flex: 0 1 10%;
-    color: #15C371;
     font-size: 45px;
     font-weight: 600;
     padding: 0 10px !important;
   }
+  .notice-success-icon{
+    color: #15C371;
+  }
   .notice-error-icon {
     color: #f29f97;
   }
-  .custom-template-close {
-    flex: 0 1 auto;
-    padding: 0 20px;
-    font-size: 16px;
-    opacity: 0.2;
-    cursor: pointer;
-  }
-  .custom-template-close:hover {
-    opacity: 0.8;
-  }
-  .custom-template-content {
-    padding: 10px;
-    flex: 1 0 auto;
-  }
-  .custom-template-title {
+  .notice-success-title{
     font-size: 1.4rem;
     font-weight: 600;
-    color: #90f0dd;
-    letter-spacing: +2.3px;
-    text-shadow: +2.3px 0 #1abc9c, -2.3px 0 #1abc9c, 0 +2.3px #1abc9c, 0 -2.3px #1abc9c;
+    color: #1abc9c;
   }
   .notice-error-title{
-    color: rgba(251, 222, 225, 0.62);
     font-size: 1.4rem;
     font-weight: 600;
-    letter-spacing: +2.3px;
-    text-shadow: +2px 0 #e32a3a, -2px 0 #e32a3a, 0 +2px #e32a3a, 0 -2px #e32a3a;
+    color: #e37a73;
   }
   .custom-template-text {
     font-size: 0.95rem;
