@@ -65,7 +65,7 @@ export default {
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.5);
-    animation: onShow .3s ease-in-out;
+    /*animation: onShow .3s ease-in-out;*/
   }
 
   .custom-modal-box {

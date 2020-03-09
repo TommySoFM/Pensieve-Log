@@ -86,7 +86,7 @@ export default {
             duration: 1250,
             text: response.data
           })
-          this.mixinGetPosts(currentPage - 1)
+          this.mixinGetPosts(currentPage)
         }).catch(error => {
           this.$notify({
             group: 'notice-app',
@@ -112,7 +112,7 @@ export default {
               duration: 1250,
               text: 'Comment is successfully posted!'
             })
-            this.mixinGetPosts(currentPage - 1)
+            this.mixinGetPosts(currentPage)
           } else {
             this.$notify({
               group: 'notice-app',
