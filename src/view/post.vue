@@ -3,9 +3,9 @@
     <div class="col-12">
       <home :isPanelOpened="isPanelOpened" :togglePanel="togglePanel"/>
     </div>
-    <div class="button-action col-12">
-      <svg class="mt-5" viewBox="0 0 350 350" style="width: 100px; position: fixed; transform: translateX(-50px)" @click="togglePanel">
-        <chevron-left style="; cursor: pointer"/>
+    <div class="col-12">
+      <svg class="panel-on-button mt-5" viewBox="0 0 350 350" @click="togglePanel">
+        <chevron-left style="cursor: pointer"/>
       </svg>
     </div>
 
@@ -257,5 +257,10 @@ export default {
     height: 30px;
     border-radius: 4px;
     border-right: 2px solid #adb7bf;
+  }
+  .panel-on-button{
+    width: 100px;
+    position: fixed;
+    transform: translateX(-50px);
   }
 </style>

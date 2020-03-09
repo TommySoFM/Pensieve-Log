@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="col-3 p-0 mt-5">
-        <svg viewBox="0 0 350 350" @click="togglePanel" style="width: 100px; transform: translateX(-60px)">
+        <svg class="panel-off-button" viewBox="0 0 350 350" @click="togglePanel" >
           <chivron-right class="button-action" style="cursor: pointer"/>
         </svg>
       </div>
@@ -187,6 +187,10 @@ export default {
   .button-reset,
   .button-confirm{
     background-color: white;
+  }
+  .panel-off-button{
+    width: 100px;
+    transform: translateX(-60px)
   }
   .panelAnimation-enter-active{
     animation: panelIn .3s ease-out;
