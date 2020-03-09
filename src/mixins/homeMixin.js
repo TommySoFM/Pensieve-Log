@@ -140,6 +140,7 @@ export default {
               duration: 2250,
               text: 'Logout Success! Redirect to Home Page in 3 Seconds...'
             })
+            this.$store.dispatch('setUserData', {})
             setTimeout(() => { this.$router.push('/login') }, 3000)
           }
         })

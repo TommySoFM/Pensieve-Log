@@ -110,6 +110,7 @@ export default {
     newPost () {
       if (RegExp('(?=.*?[a-zA-Z0-9\\W]).+').test(this.postText)) {
         this.mixinNewPost(this.postText)
+        this.postText = ''
       } else {
         this.$notify({
           group: 'notice-app',
@@ -118,6 +119,7 @@ export default {
           duration: 3000,
           text: 'Post should contain at least one word!'
         })
+        this.postText = ''
       }
     },
     changePage (page) {

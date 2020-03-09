@@ -1,6 +1,12 @@
 <template>
-  <div class="my-5">
-    <div class="d-flex flex-column-reverse" >
+  <div class="my-3">
+    <div class="d-flex px-5 mb-n3">
+      <p class="mx-auto mb-0" v-show="!isLastPage" @click="loadOption(3)" style="cursor: pointer">Show Older</p>
+      <div class="border-left" v-show="!isLastPage && commentSelector !== -3"/>
+      <p class="mx-auto  mb-0" v-show="commentSelector !== -3" @click="loadOption(-3)" style="cursor: pointer">Show Less</p>
+    </div>
+    <div class="post-divider col-7 mx-auto my-4"/>
+    <div class="d-flex flex-column" >
       <div class="mx-5 mb-4 d-flex flex-column" v-for="comment in selectedComments" :key="comment.id">
         <div class="d-flex">
           <div class=" font-weight-bolder"> {{comment.username}} : </div>
@@ -11,13 +17,6 @@
         </div>
       </div>
     </div>
-
-    <div class="d-flex px-5 mb-n3">
-      <p class="mx-auto mb-0" v-show="!isLastPage" @click="loadOption(3)" style="cursor: pointer">Show More</p>
-      <div class="border-left" v-show="!isLastPage && commentSelector !== -3"/>
-      <p class="mx-auto  mb-0" v-show="commentSelector !== -3" @click="loadOption(-3)" style="cursor: pointer">Show Less</p>
-    </div>
-    <div class="post-divider col-7 mx-auto my-4"/>
 
     <div v-if="selectedComments.length === 0">
       <p class="text-center" style="letter-spacing: .3px; word-spacing: 4px; color: rgba(0,70,98,0.5)">
@@ -85,6 +84,7 @@ export default {
     newComment () {
       if (RegExp('(?=.*?[a-zA-Z0-9]).+').test(this.newCommentText)) {
         this.mixinNewComment(this.postData.id, this.newCommentText, this.currentPage)
+        this.newCommentText = ''
       } else {
         this.$notify({
           group: 'notice-app',
@@ -93,6 +93,7 @@ export default {
           duration: 3000,
           text: 'Comment should contain at least one word!'
         })
+        this.newCommentText = ''
         document.getElementById('textarea').focus()
       }
     }

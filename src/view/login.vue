@@ -46,7 +46,8 @@ export default {
       return (this.username === '' && this.password === '')
     },
     ...mapGetters([
-      'getServerUrl'
+      'getServerUrl',
+      'getUserData'
     ])
   },
   mixins: [
@@ -61,5 +62,18 @@ export default {
       this.password = ''
     }
   }
+  // beforeRouteEnter (to, from, next) {
+  //   console.log(this.getUserData.sessionId)
+  //   if (this.getUserData.sessionId !== null) {
+  //     this.$notify({
+  //       group: 'notice-app',
+  //       type: 'error',
+  //       title: 'Failed!',
+  //       duration: 3000,
+  //       text: 'You have already logged in!'
+  //     })
+  //     this.$route.go(-1)
+  //   }
+  // }
 }
 </script>

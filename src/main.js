@@ -34,7 +34,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/' || to.path === '/login' || to.path === '/signup') {
+  if (to.path === '/' || to.path === '/signup') {
     next()
   } else {
     const targetUrl = store.getters.getServerUrl + '/isSessionValid'
@@ -42,14 +42,22 @@ router.beforeEach((to, from, next) => {
     axios.get(targetUrl)
       .then(response => {
         if (response.status === 202) {
-          store.dispatch('setUserData', response.data)
-          next()
+          if (to.path === '/login') {
+            window.alert('You have already logged in!')
+            next('/post/1')
+          } else {
+            store.dispatch('setUserData', response.data)
+            next()
+          }
         }
       }).catch(error => {
-        console.log(error)
         if (error.response.status === 401) {
-          window.alert('Please Login')
-          next('/')
+          if (to.path === '/login') {
+            next()
+          } else {
+            window.alert('Please Login')
+            next('/')
+          }
         }
       })
   }
