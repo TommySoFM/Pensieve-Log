@@ -51,7 +51,7 @@ export default {
         })
     },
 
-    mixinEditPost (postId, postText, currentPage) {
+    mixinEditPost (postId, postText) {
       const targetUrl = this.getServerUrl + '/post/' + postId
       const formData = new FormData()
       formData.append('postText', postText)
@@ -64,7 +64,7 @@ export default {
             duration: 1250,
             text: response.data
           })
-          this.mixinGetPosts(currentPage - 1)
+          this.mixinGetPosts(this.$route.params.page - 1)
         }).catch(error => {
           this.$notify({
             group: 'notice-app',
@@ -75,7 +75,7 @@ export default {
           })
         })
     },
-    mixinDeletePost (postId, currentPage) {
+    mixinDeletePost (postId) {
       const targetUrl = this.getServerUrl + '/post/' + postId
       axios.delete(targetUrl)
         .then(response => {
@@ -86,7 +86,7 @@ export default {
             duration: 1250,
             text: response.data
           })
-          this.mixinGetPosts(currentPage)
+          this.mixinGetPosts(this.$route.params.page - 1)
         }).catch(error => {
           this.$notify({
             group: 'notice-app',
@@ -98,7 +98,7 @@ export default {
         })
     },
 
-    mixinNewComment (id, commentText, currentPage) {
+    mixinNewComment (id, commentText) {
       const formData = new FormData()
       const url = this.getServerUrl + '/post/' + id + '/comment'
       formData.append('commentText', commentText)
@@ -112,7 +112,7 @@ export default {
               duration: 1250,
               text: 'Comment is successfully posted!'
             })
-            this.mixinGetPosts(currentPage)
+            this.mixinGetPosts(this.$route.params.page - 1)
           } else {
             this.$notify({
               group: 'notice-app',

@@ -63,8 +63,7 @@ export default {
     }
   },
   props: [
-    'postData',
-    'currentPage'
+    'postData'
   ],
   mixins: [
     homeMixin
@@ -83,7 +82,7 @@ export default {
     },
     newComment () {
       if (RegExp('(?=.*?[a-zA-Z0-9]).+').test(this.newCommentText)) {
-        this.mixinNewComment(this.postData.id, this.newCommentText, this.currentPage)
+        this.mixinNewComment(this.postData.id, this.newCommentText)
         this.newCommentText = ''
       } else {
         this.$notify({

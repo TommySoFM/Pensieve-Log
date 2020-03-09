@@ -122,11 +122,11 @@ export default {
   },
   methods: {
     editPost (id) {
-      this.mixinEditPost(id, this.editPostText, this.currentPage)
+      this.mixinEditPost(id, this.editPostText)
       this.editPostId = 0
     },
     deletePost (id) {
-      this.mixinDeletePost(id, this.currentPage)
+      this.mixinDeletePost(id)
     },
     clickEdit (postId, postText) {
       this.editPostId = postId
