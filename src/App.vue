@@ -5,7 +5,7 @@
       <svg class="logo-pic py-0" viewBox="-200 -40 650 650">
         <logo-pic/>
       </svg>
-      <h3 class="ml-3">Pensieve Log</h3>
+      <h3 class="ml-3" data-e2e="title">Pensieve Log</h3>
       </div>
       <nav class="nav-indication col-2 mr-5 d-none d-lg-inline-block">
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isLoginPage">Login</router-link>

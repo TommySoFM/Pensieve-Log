@@ -3,19 +3,19 @@
     <b-form class="form-signup">
       <div class="mb-3">
         <b-form-group label="Username" description="*Length 6-20 characters long, no space allowed.">
-          <b-input v-model="entry.username" required :state="validation.isUsernameValid"/>
+          <b-input v-model="entry.username" required :state="validation.isUsernameValid" data-e2e="signup-username"/>
         </b-form-group>
-        <b-form-invalid-feedback :state="validation.isUsernameValid">
+        <b-form-invalid-feedback :state="validation.isUsernameValid" data-e2e="username-invalid">
           Invalid Username!
         </b-form-invalid-feedback>
-        <b-form-invalid-feedback :state="validation.isUsernameAvailable">
+        <b-form-invalid-feedback :state="validation.isUsernameAvailable" data-e2e="username-used">
           Username is Used!
         </b-form-invalid-feedback>
       </div>
-      <div class="mb-3">
+      <div class="mb-3" data-e2e="signup-field">
         <b-form-group label="Password"
                       description="*Length 8-25 characters long with 1 lowercase, 1 uppercase character and no space allowed.">
-          <b-input type="password" v-model="entry.password" required :state="validation.isPasswordValid"/>
+          <b-input type="password" v-model="entry.password" required :state="validation.isPasswordValid" data-e2e="signup-password"/>
         </b-form-group>
         <b-form-invalid-feedback :state="validation.isPasswordValid">
           Invalid Password!

@@ -10,8 +10,8 @@
       </svg>
     </div>
     <div class="button-action col-3 d-none d-lg-block text-center my-auto" v-if="this.isFrontPage">
-      <router-link tag="h3" to="/login" class="button button-login py-4 my-5">Log-in</router-link>
-      <router-link tag="h3" to="/signup" class="button button-signup py-4 ">Sign-up</router-link>
+      <router-link tag="h3" to="/login" class="button button-login py-4 my-5" data-e2e="login-button">Log-in</router-link>
+      <router-link tag="h3" to="/signup" class="button button-signup py-4 " data-e2e="signup-button">Sign-up</router-link>
     </div>
     <template v-if="this.isLoginPage || this.isSignupPage">
       <router-view/>

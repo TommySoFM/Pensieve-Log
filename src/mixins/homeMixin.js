@@ -46,9 +46,6 @@ export default {
             })
           }
         })
-        .then(error => {
-          console.log(error)
-        })
     },
 
     mixinEditPost (postId, postText) {
@@ -123,9 +120,6 @@ export default {
             })
           }
         })
-        .then(error => {
-          console.log(error)
-        })
     },
 
     mixinLogout () {
@@ -143,9 +137,6 @@ export default {
             this.$store.dispatch('setUserData', {})
             setTimeout(() => { this.$router.push('/login') }, 3000)
           }
-        })
-        .catch(error => {
-          console.log(error)
         })
     }
   }
