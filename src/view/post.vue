@@ -1,15 +1,20 @@
 <template>
-  <div class="d-flex flex-wrap justify-content-around align-items-start ml-5">
+  <div class="d-flex flex-wrap justify-content-around align-items-start mx-5" @click.self="panelOff">
     <div class="col-12">
-      <home :isPanelOpened="isPanelOpened" :togglePanel="togglePanel"/>
+      <home :isPanelOpened="isPanelOpened" :panelOff="panelOff"/>
     </div>
-    <div class="col-12">
-      <svg class="panel-on-button mt-5" viewBox="0 0 350 350" @click="togglePanel">
-        <chevron-left style="cursor: pointer"/>
-      </svg>
+    <div class="panel-on-button mt-5 mt-sm-0" @click="panelOn">
+      <BIconList/>
     </div>
-
-    <div class="my-4 post-container ml-md-4" v-for="post in getPosts" :key="post.id">
+    <router-link tag="div" class="page-chevron-left" :to="previous" v-if="isLastPage">
+      <BIconChevronLeft v-if="!hoverToPrevious" @mouseenter="hoverToPrevious=true"/>
+      <div class="page-index-left" v-if="hoverToPrevious" @mouseleave="hoverToPrevious=false"> Page {{ getCurrentPage }}</div>
+    </router-link>
+    <router-link tag="div" class="page-chevron-right" :to="next" v-if="isFirstPage">
+      <BIconChevronRight v-if="!hoverToNext" @mouseenter="hoverToNext=true"/>
+      <div class="page-index-right" v-if="hoverToNext" @mouseleave="hoverToNext=false"> Page {{ getCurrentPage+2 }}</div>
+    </router-link>
+    <div class="my-4 post-container ml-md-4" v-for="post in getPosts" :key="post.id" @click="panelOff">
       <div class="post-header d-flex">
         <p class="ml-3 mr-1 mb-0">
           <span>#</span>
@@ -89,24 +94,32 @@ import deleteModal from '../components/modal/deleteModal'
 
 import {
   BIconXCircleFill, BIconTerminalFill,
-  BIconXCircle, BIconCheckCircle
+  BIconXCircle, BIconCheckCircle,
+  BIconChevronLeft, BIconChevronRight,
+  BIconList
 } from 'bootstrap-vue'
-import chevronLeft from '../assets/chevron-left.svg'
 
 export default {
   data () {
     return {
       currentPage: this.$route.params.page,
-
       editPostId: 0,
       editPostText: '',
-      isPanelOpened: false
+      isPanelOpened: false,
+      hoverToPrevious: false,
+      hoverToNext: false
     }
   },
   computed: {
     ...mapGetters([
       'getUserData',
-      'getPosts'
+      'getPosts',
+      'getCurrentPage',
+      'getTotalPages',
+      'next',
+      'previous',
+      'isFirstPage',
+      'isLastPage'
     ])
   },
   mixins: [
@@ -136,8 +149,11 @@ export default {
       this.$store.dispatch('setModal', { id: id, mode: mode })
       this.$store.dispatch('modalOn')
     },
-    togglePanel () {
-      this.isPanelOpened = !this.isPanelOpened
+    panelOn () {
+      this.isPanelOpened = true
+    },
+    panelOff () {
+      this.isPanelOpened = false
     }
   },
   components: {
@@ -150,7 +166,9 @@ export default {
     BIconTerminalFill,
     BIconXCircle,
     BIconCheckCircle,
-    chevronLeft
+    BIconChevronLeft,
+    BIconChevronRight,
+    BIconList
   }
 }
 </script>
@@ -259,8 +277,46 @@ export default {
     border-right: 2px solid #adb7bf;
   }
   .panel-on-button{
-    width: 100px;
     position: fixed;
-    transform: translateX(-50px);
+    top: 18vh;
+    left: 30px;
+    transform: scale(3);
+    cursor: pointer;
+  }
+  .page-chevron-left{
+    position: fixed;
+    top: 50vh;
+    left: 20px;
+    transform: scale(2.5);
+    cursor: pointer;
+    color: rgba(99,122,129,100);
+  }
+  .page-index-left{
+    font-size: 50%;
+    padding: 5px 10px;
+    background-image: linear-gradient(to right, rgba(215, 215, 215, 0.5), white);
+    animation: slideInLeft 0.2s ease-in ;
+  }
+  .page-chevron-right{
+    position: fixed;
+    top: 50vh;
+    right: 20px;
+    transform: scale(2.5);
+    cursor: pointer;
+    color: rgba(99,122,129,100);
+  }
+  .page-index-right{
+    font-size: 50%;
+    padding: 5px 10px;
+    background-image: linear-gradient(to left, rgba(215, 215, 215, 0.5), white);
+    animation: slideInRight 0.2s ease-in ;
+  }
+  @keyframes slideInLeft {
+    0% {transform: translateX(-20px)}
+    100% {transform: translateX(0px)}
+  }
+  @keyframes slideInRight {
+    0% {transform: translateX(+20px)}
+    100% {transform: translateX(0px)}
   }
 </style>

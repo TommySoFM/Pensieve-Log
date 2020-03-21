@@ -1,7 +1,7 @@
 <template>
   <transition name="panelAnimation">
     <div class="home-panel mr-auto d-flex" v-if="isPanelOpened">
-      <div class="col-10" style="background: rgba(241,241,241,0.96); border-right: 8px groove #adb7bf">
+      <div class="col-12" style="background: rgba(241,241,241,0.96); border-right: 8px groove #adb7bf">
         <h2 class="mt-5 text-center"> Control Panel </h2>
         <div class="post-divider col-6 mx-auto mt-3"/>
         <b-form class="col-10 ml-4 my-4">
@@ -39,11 +39,9 @@
         <div class="col-8 offset-2 pl-5 font-weight-bolder">
           <h4>Page: {{getCurrentPage + 1}}/{{getTotalPages}} </h4>
         </div>
-      </div>
-      <div class="col-3 p-0 mt-5">
-        <svg class="panel-off-button" viewBox="0 0 350 350" @click="togglePanel" >
-          <chivron-right class="button-action" style="cursor: pointer"/>
-        </svg>
+        <div class="panel-off-button" @click="panelOff">
+          <BIconXCircleFill/>
+        </div>
       </div>
     </div>
   </transition>
@@ -55,7 +53,7 @@ import arrowLeft from '../assets/arrow-left.svg'
 import arrowRight from '../assets/arrow-right.svg'
 import arrowLeftDisabled from '../assets/arrow-left-disabled.svg'
 import arrowRightDisabled from '../assets/arrow-right-disabled.svg'
-import chivronRight from '../assets/chevron-right.svg'
+import { BIconXCircleFill } from 'bootstrap-vue'
 
 export default {
   data: function () {
@@ -67,29 +65,18 @@ export default {
   },
   props: [
     'isPanelOpened',
-    'togglePanel'
+    'panelOff'
   ],
   computed: {
     ...mapGetters([
       'getUserData',
       'getTotalPages',
       'getCurrentPage',
-      'getRandomId'
-    ]),
-    next () {
-      const targetPage = '/post/' + (this.getCurrentPage + 2).toString()
-      return targetPage
-    },
-    previous () {
-      const targetPage = '/post/' + (this.getCurrentPage).toString()
-      return targetPage
-    },
-    isFirstPage () {
-      return this.getCurrentPage === 0
-    },
-    isLastPage () {
-      return this.getCurrentPage + 1 === this.getTotalPages
-    }
+      'next',
+      'previous',
+      'isFirstPage',
+      'isLastPage'
+    ])
   },
   mixins: [
     homeMixin
@@ -99,7 +86,7 @@ export default {
     arrowRight,
     arrowLeftDisabled,
     arrowRightDisabled,
-    chivronRight
+    BIconXCircleFill
   },
   watch: {
     $route (to, from) {
@@ -134,7 +121,7 @@ export default {
 <style scoped>
   .home-panel{
     height: 100vh;
-    width: 450px;
+    width: 400px;
     position: fixed;
     left: 0;
     z-index: 2;
@@ -191,8 +178,11 @@ export default {
     background-color: white;
   }
   .panel-off-button{
-    width: 100px;
-    transform: translateX(-60px)
+    position: absolute;
+    top: 4%;
+    right: 30px;
+    transform: scale(2);
+    color: rgba(99,122,129,100);
   }
   .panelAnimation-enter-active{
     animation: panelIn .3s ease-out;

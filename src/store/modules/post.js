@@ -16,6 +16,20 @@ const getters = {
   },
   getCurrentPage: (state) => {
     return state.currentPage
+  },
+  next () {
+    const targetPage = '/post/' + (state.currentPage + 2).toString()
+    return targetPage
+  },
+  previous () {
+    const targetPage = '/post/' + (state.currentPage).toString()
+    return targetPage
+  },
+  isFirstPage () {
+    return state.currentPage === 0
+  },
+  isLastPage () {
+    return state.currentPage + 1 === state.totalPages
   }
 }
 
