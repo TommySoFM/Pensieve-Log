@@ -10,14 +10,10 @@
       <nav class="nav-indication col-2 mr-5 d-none d-lg-inline-block">
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isLoginPage">Login</router-link>
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isSignupPage">Sign-up</router-link>
-        <h5 class="text-center border-left border-right" style="cursor: pointer" @click="logout" v-if="isHomePage">Logout</h5>
       </nav>
       <div class="col-1 d-none d-lg-inline-block"></div>
       <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0 " @click="scrollToBottom">
         <div class="border-left"/>
-        <h5 to="/" class="nav-header flex-grow-1 text-center pt-3" v-if="isHomePage" @click="logout">
-          Logout
-        </h5>
         <router-link tag="h5" to="/login" class="nav-header flex-grow-1 text-center pt-3" v-if="!isHomePage">
           Log-in
         </router-link>
@@ -25,6 +21,20 @@
         <router-link tag="h5" to="/signup" class="nav-header flex-grow-1 text-center pt-3" v-if="!isHomePage">
           Sign-up
         </router-link>
+        <div class="border-left"/>
+      </nav>
+      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 mb-2 my-sm-0 " v-if="isHomePage">
+        <div class="border-left"/>
+        <router-link tag="h5" to="/user" class="nav-header flex-grow-1 text-center pt-3" v-if="!isUserPage">
+          User
+        </router-link>
+        <router-link tag="h5" to="/post/1" class="nav-header flex-grow-1 text-center pt-3" v-if="isUserPage">
+          Home
+        </router-link>
+        <div class="border-left"/>
+        <h5 to="/" class="nav-header flex-grow-1 text-center pt-3" @click="logout">
+          Logout
+        </h5>
         <div class="border-left"/>
       </nav>
     </div>
@@ -51,7 +61,8 @@ export default {
       'getCurrentPathName',
       'isFrontPage',
       'isLoginPage',
-      'isSignupPage'
+      'isSignupPage',
+      'isUserPage'
     ]),
     isHomePage () {
       return (!this.isFrontPage && !this.isLoginPage && !this.isSignupPage)

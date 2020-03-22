@@ -14,6 +14,9 @@ const getters = {
   },
   isSignupPage: (state) => {
     return state.currentPathName === 'signup'
+  },
+  isUserPage: (state) => {
+    return state.currentPathName === 'user'
   }
 }
 

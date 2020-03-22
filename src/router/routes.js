@@ -12,7 +12,23 @@ export const routes = [
       { path: '/signup', name: 'signup', component: signup }
     ]
   },
-  { path: '/post/:page', name: 'post', component: () => import(/* webpackChunkName: "PostPage" */ '../view/post') },
-  { path: '/home', name: 'home', component: () => import(/* webpackChunkName: "HomePanel" */ '../components/home') },
-  { path: '*', redirect: '/login' }
+  {
+    path: '/post/:page',
+    name: 'post',
+    component: () => import(/* webpackChunkName: "PostPage" */ '../view/post')
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: () => import(/* webpackChunkName: "HomePanel" */ '../components/home')
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: () => import(/* webpackChunkName: "User" */ '../view/user')
+  },
+  {
+    path: '*',
+    redirect: '/login'
+  }
 ]
