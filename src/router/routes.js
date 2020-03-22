@@ -1,8 +1,6 @@
 import front from '../view/front'
 import signup from '../view/signup'
 import login from '../view/login'
-import home from '../components/home'
-import post from '../view/post'
 
 export const routes = [
   {
@@ -14,7 +12,7 @@ export const routes = [
       { path: '/signup', name: 'signup', component: signup }
     ]
   },
-  { path: '/post/:page', name: 'post', component: post },
-  { path: '/home', name: 'home', component: home },
-  { path: '*', redirect: '/log_in' }
+  { path: '/post/:page', name: 'post', component: () => import(/* webpackChunkName: "PostPage" */ '../view/post') },
+  { path: '/home', name: 'home', component: () => import(/* webpackChunkName: "HomePanel" */ '../components/home') },
+  { path: '*', redirect: '/login' }
 ]
