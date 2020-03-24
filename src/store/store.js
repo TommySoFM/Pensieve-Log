@@ -9,9 +9,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    serverUrl: 'https://tomiakis.tommyfms.com'
+    // serverUrl: 'https://tomiakis.tommyfms.com'
     // serverUrl: 'https://tomiakis.com'
-    // serverUrl: 'http://localhost:8080'
+    serverUrl: 'http://localhost:8080'
   },
   getters: {
     getServerUrl: (state) => {
