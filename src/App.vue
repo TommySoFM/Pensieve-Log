@@ -114,7 +114,7 @@ export default {
   }
   .form-login{
     height: 90vh;
-    padding-top: 30vh;
+    padding-top: 15vh;
   }
   .form-signup{
     height: 90vh;

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="276" height="275" viewBox="0 0 276 275">
+  <defs>
+    <clipPath id="clip-Artboard_1">
+      <rect width="276" height="275"/>
+    </clipPath>
+  </defs>
+  <g id="Artboard_1" data-name="Artboard – 1" clip-path="url(#clip-Artboard_1)">
+    <g id="Component_1_1" data-name="Component 1 – 1">
+      <g id="Ellipse_1" data-name="Ellipse 1" fill="#edede4" stroke="#0b63b5" stroke-width="20">
+        <ellipse cx="138" cy="137.5" rx="138" ry="137.5" stroke="none"/>
+        <ellipse cx="138" cy="137.5" rx="128" ry="127.5" fill="none"/>
+      </g>
+    </g>
+    <g id="facebook" transform="translate(62 28)">
+      <rect id="ee-background" width="86.121" height="229.639" fill="rgba(255,255,255,0)"/>
+      <g id="Group_1" data-name="Group 1" transform="translate(22.301 14.893)">
+        <path id="Path_1" data-name="Path 1" d="M179.9,187.2h21.6V167.7c0-8.6.2-21.9,6.9-30.1,7.1-8.7,16.8-14.7,33.5-14.7,27.2,0,38.6,3.6,38.6,3.6l-5.4,29.8a78.567,78.567,0,0,0-17.4-2.4c-8.4,0-15.9,2.8-15.9,10.6v22.7h34.4l-2.4,29.1h-32V317.4H201.4V216.3H179.8V187.2Z" transform="translate(-173 -116.1)" fill="#0b63b5"/>
+        <path id="Path_2" data-name="Path 2" d="M169.1,176.4h21.6V156.9c0-8.6.2-21.9,6.9-30.1,7.1-8.7,16.8-14.7,33.5-14.7,27.2,0,38.6,3.6,38.6,3.6l-5.4,29.8a78.567,78.567,0,0,0-17.4-2.4c-8.4,0-15.9,2.8-15.9,10.6v22.7h34.4L263,205.5H231V306.6H190.6V205.5H169V176.4Z" transform="translate(-169 -112.1)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="5"/>
+        <path id="Path_3" data-name="Path 3" d="M780.371,296.459" transform="translate(-652.672 -118.909)" fill="#0b63b5" stroke="#000" stroke-width="1"/>
+        <path id="Path_4" data-name="Path 4" d="M544.777,233.815" transform="translate(-474.025 -118.909)" fill="#0b63b5" stroke="#000" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

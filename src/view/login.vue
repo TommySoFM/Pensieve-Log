@@ -1,6 +1,23 @@
 <template>
   <div class="col-8 col-lg-4 col-xl-3 mx-auto mx-lg-0 form-border">
     <b-form class="form-login">
+      <div class="oauth-container" @click="oauthLogin('github')">
+        <div class="oauth-button">
+          <svg class="oauth-icon" viewBox="-10 -10 320 320"><github-icon/></svg>
+        </div>
+        <h5 class="mr-2">Login with Github</h5>
+      </div>
+      <div class="oauth-container" @click="oauthLogin('facebook')">
+        <div class="oauth-button">
+          <svg class="oauth-icon" viewBox="-10 -10 300 300"><facebook-icon/></svg>
+        </div>
+        <h5 class="mr-2">Login with Facebook</h5>
+      </div>
+      <div class="col-12 d-flex align-items-center my-4 px-2">
+        <span style="border: 2px solid #dcdcdc; width: 50%"></span>
+        <span class="mx-3" style="color: #c3c3c3">OR</span>
+        <span style="border: 2px solid #dcdcdc; width: 50%"></span>
+      </div>
       <div class="mb-4">
         <b-form-group label="Username">
           <b-input name="username" v-model="username" required/>
@@ -33,11 +50,16 @@
 <script>
 import frontMixin from '../mixins/frontMixin'
 import { mapGetters } from 'vuex'
+import facebookIcon from '../assets/facebook.svg'
+import githubIcon from '../assets/github.svg'
 export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      windowObjectReference: null,
+      previousUrl: null,
+      oauthStatus: null
     }
   },
   computed: {
@@ -53,6 +75,18 @@ export default {
   mixins: [
     frontMixin
   ],
+  components: {
+    facebookIcon,
+    githubIcon
+  },
+  watch: {
+    oauthStatus () {
+      if (this.oauthStatus === 'Login Success') {
+        this.$router.push('/post/1')
+        window.scrollTo(0, 0)
+      }
+    }
+  },
   methods: {
     login () {
       this.mixinLogin(this.username, this.password)
@@ -60,7 +94,54 @@ export default {
     reset () {
       this.username = ''
       this.password = ''
+    },
+    openSigninWindow (url, name) {
+      const strWindowFeatures = 'toolbar=no, menubar=no, width=600, height=700, top=100, left=100'
+      if (this.windowObjectReference == null || this.windowObjectReference.closed) {
+        this.windowObjectReference = window.open(url, name, strWindowFeatures)
+      } else if (this.previousUrl !== url) {
+        this.windowObjectReference = window.open(url, name, strWindowFeatures)
+        this.windowObjectReference.focus()
+      } else {
+        this.windowObjectReference.focus()
+      }
+      window.addEventListener('message', event => this.receiveMessage(event), false)
+      this.previousUrl = url
+    },
+    oauthLogin (platform) {
+      const targetUrl = this.getServerUrl + '/oauth2/authorization/' + platform
+      this.openSigninWindow(targetUrl, 'OAuthLoginPage')
+    },
+    receiveMessage (event) {
+      this.oauthStatus = event.data
     }
   }
 }
 </script>
+<style>
+  .oauth-container{
+    display: flex;
+    align-items: baseline;
+    justify-content: start;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 2px solid #e6e6dd;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+  }
+  .oauth-container:hover,
+  .oauth-container:active{
+    border: 3px solid #004662;
+    background-color: #f7f7ee;
+    color: #004662;
+  }
+  .oauth-button{
+    width: 60px;
+    margin-left: 8px;
+  }
+  .oauth-icon{
+    height: 50px;
+    width: 50px;
+  }
+</style>

@@ -28,6 +28,11 @@ export const routes = [
     component: () => import(/* webpackChunkName: "User" */ '../view/user')
   },
   {
+    path: '/oauth/success',
+    name: 'oauth',
+    component: () => import(/* webpackChunkName: "User" */ '../view/oauth')
+  },
+  {
     path: '*',
     redirect: '/login'
   }

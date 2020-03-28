@@ -18,8 +18,8 @@ export default {
           if (response.status === 200) {
             this.$router.push('/post/1')
           }
+          // eslint-disable-next-line handle-callback-err
         }).catch(error => {
-          console.log(error)
           this.password = ''
           this.$notify({
             group: 'notice-app',
@@ -46,8 +46,8 @@ export default {
           })
           setTimeout(() => { this.$router.push('/login') }, 3000)
         })
+        // eslint-disable-next-line handle-callback-err
         .catch(error => {
-          console.log(error.response.data.message)
           this.$notify({
             group: 'notice-app',
             type: 'error',
@@ -64,7 +64,7 @@ export default {
       axios.post(targetUrl, formData)
         .then(response => {
           return !response.data
-        }).catch(error => { console.log(error) })
+        })
     }
   }
 }
