@@ -12,13 +12,13 @@
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isSignupPage">Sign-up</router-link>
       </nav>
       <div class="col-1 d-none d-lg-inline-block"></div>
-      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0 " @click="scrollToBottom">
+      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0 " @click="scrollToBottom" v-if="!isHomePage">
         <div class="border-left"/>
-        <router-link tag="h5" to="/login" class="nav-header flex-grow-1 text-center pt-3" v-if="!isHomePage">
+        <router-link tag="h5" to="/login" class="nav-header flex-grow-1 text-center pt-3">
           Log-in
         </router-link>
         <div class="border-left"/>
-        <router-link tag="h5" to="/signup" class="nav-header flex-grow-1 text-center pt-3" v-if="!isHomePage">
+        <router-link tag="h5" to="/signup" class="nav-header flex-grow-1 text-center pt-3">
           Sign-up
         </router-link>
         <div class="border-left"/>

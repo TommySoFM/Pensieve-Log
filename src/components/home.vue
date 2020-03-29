@@ -2,8 +2,8 @@
   <transition name="panelAnimation">
     <div class="home-panel mr-auto d-flex" v-if="isPanelOpened">
       <div class="col-12" style="background: rgba(241,241,241,0.96); border-right: 8px groove #adb7bf">
-        <h2 class="mt-5 text-center"> Control Panel </h2>
-        <div class="post-divider col-6 mx-auto mt-3"/>
+        <h2 class="mt-sm-5 mt-4 text-center"> Control Panel </h2>
+        <div class="post-divider col-6 mx-auto mt-sm-3 mt-sm-4 mt-2"/>
         <b-form class="col-10 ml-4 my-4">
           <div class="textbox-heading">
             <p class="font-weight-bolder m-0">New Thought:</p>
@@ -18,7 +18,7 @@
            <h5 class="button float-left offset-1 col-4 py-2" :class="[this.postText!=='' ? 'button-reset' : 'button-disabled']" @click="reset">Reset</h5>
           </span>
         </div>
-        <div class="d-flex align-items-center mt-5 mb-2">
+        <div class="d-flex align-items-center mt-sm-5 mt-4 mb-2">
           <svg v-if="isFirstPage" class="col-4 nav-arrow p-0 ml-4" viewBox="0 -35 230 230">
             <arrow-left-disabled/>
           </svg>

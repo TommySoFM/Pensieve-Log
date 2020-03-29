@@ -1,14 +1,20 @@
 <template>
   <div class="my-3">
     <div class="d-flex px-5 mb-n3">
-      <p class="mx-auto mb-0" v-show="!isLastPage" @click="loadOption(3)" style="cursor: pointer">Show Older</p>
-      <div class="border-left" v-show="!isLastPage && commentSelector !== -3"/>
-      <p class="mx-auto  mb-0" v-show="commentSelector !== -3" @click="loadOption(-3)" style="cursor: pointer">Show Less</p>
+      <p class="mx-auto mb-0" v-show="!isLastPage" @click="loadOption(3)"
+         style="cursor: pointer; color: rgba(0,70,98,0.5); font-weight: bolder">
+        Show Older
+      </p>
+      <div class="border-left mx-1" v-show="!isLastPage && commentSelector !== -3"/>
+      <p class="mx-auto  mb-0" v-show="commentSelector !== -3" @click="loadOption(-3)"
+         style="cursor: pointer; color: rgba(0,70,98,0.5); font-weight: bolder">
+        Show Less
+      </p>
     </div>
-    <div class="post-divider col-7 mx-auto my-4"/>
+    <div class="post-divider col-9 mx-auto my-sm-4 mt-4 mb-2"/>
     <div class="d-flex flex-column" >
       <div class="mx-sm-5 mx-3 mb-4 d-flex flex-column" v-for="comment in selectedComments" :key="comment.id">
-        <div class="d-flex">
+        <div class="d-flex mb-2 mb-sm-1">
           <div class=" font-weight-bolder"> {{comment.username}} : </div>
           <div class="post-time ml-auto">{{comment.creation_timestamp | moment("from", "now", true)}} ago </div>
         </div>
