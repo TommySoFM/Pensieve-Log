@@ -5,13 +5,13 @@
         <div class="oauth-button">
           <svg class="oauth-icon" viewBox="-10 -10 320 320"><github-icon/></svg>
         </div>
-        <h5 class="mr-2">Login with Github</h5>
+        <h5 class="ml-2 mt-2">Login with Github</h5>
       </div>
-      <div class="oauth-container" @click="oauthLogin('facebook')">
+      <div class="oauth-container" @click="oauthLogin('google')">
         <div class="oauth-button">
-          <svg class="oauth-icon" viewBox="-10 -10 300 300"><facebook-icon/></svg>
+          <svg class="oauth-icon" viewBox="-12 -12 310 310"><google-icon/></svg>
         </div>
-        <h5 class="mr-2">Login with Facebook</h5>
+        <h5 class="ml-2 mt-2">Login with Google</h5>
       </div>
       <div class="col-12 d-flex align-items-center my-4 px-2">
         <span style="border: 2px solid #dcdcdc; width: 50%"></span>
@@ -52,6 +52,7 @@ import frontMixin from '../mixins/frontMixin'
 import { mapGetters } from 'vuex'
 import facebookIcon from '../assets/facebook.svg'
 import githubIcon from '../assets/github.svg'
+import googleIcon from '../assets/google.svg'
 export default {
   data () {
     return {
@@ -76,8 +77,10 @@ export default {
     frontMixin
   ],
   components: {
+    // eslint-disable-next-line vue/no-unused-components
     facebookIcon,
-    githubIcon
+    githubIcon,
+    googleIcon
   },
   watch: {
     oauthStatus () {
@@ -121,7 +124,7 @@ export default {
 <style>
   .oauth-container{
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: start;
     margin-top: 10px;
     padding: 5px 10px;

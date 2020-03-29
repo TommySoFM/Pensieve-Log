@@ -12,7 +12,7 @@ export default {
   },
   mounted () {
     if (window.opener) {
-      window.opener.postMessage('Login Success')
+      window.opener.postMessage('Login Success', window.location.origin)
       this.message = 'Login Success! Redirecting...'
     } else {
       this.message = 'Error - No Parent Window Opener'
