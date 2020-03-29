@@ -7,7 +7,7 @@
     </div>
     <div class="post-divider col-7 mx-auto my-4"/>
     <div class="d-flex flex-column" >
-      <div class="mx-5 mb-4 d-flex flex-column" v-for="comment in selectedComments" :key="comment.id">
+      <div class="mx-sm-5 mx-3 mb-4 d-flex flex-column" v-for="comment in selectedComments" :key="comment.id">
         <div class="d-flex">
           <div class=" font-weight-bolder"> {{comment.username}} : </div>
           <div class="post-time ml-auto">{{comment.creation_timestamp | moment("from", "now", true)}} ago </div>
@@ -25,7 +25,7 @@
       <div class="post-divider col-7 mx-auto my-4"/>
     </div>
 
-    <div class="d-flex align-items-center mx-5 my-4">
+    <div class="d-flex align-items-center mx-sm-5 mx-3 my-sm-4 my-2">
       <textarea class="comment-form ml-auto" rows="1" max-rows="1"
                 v-model="newCommentText" placeholder="Type to Reply"/>
       <input class="comment-button" type="button" value="Submit" @click="newComment">
@@ -104,7 +104,7 @@ export default {
     width: 95%;
     background: rgba(235, 235, 235, 0.30);
     border: 1px groove rgba(0,70,98,0.5);
-    border-radius: 50px;
+    border-radius: 25px;
   }
 
   /*<-----------------Comment Textarea----------------->*/
@@ -125,6 +125,7 @@ export default {
     box-shadow: 0 0 0 0.2rem rgba(0, 150, 205, 0.2);
   }
   .comment-form::placeholder{
+    transform: translateY(2px) translateX(5px);
     font-size: 0.9rem;
     font-weight: 700;
     color: rgba(0,70,98,0.5);

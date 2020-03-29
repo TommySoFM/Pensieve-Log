@@ -43,11 +43,11 @@
       <div class="post-divider col-10 mx-auto my-3"/>
 
       <div class="d-flex">
-        <div class="post-like-button flex-grow-1 text-center ml-5">
+        <div class="post-like-button flex-grow-1 text-center ml-sm-5 ml-3">
           <post-like :postData="post"/>
         </div>
         <div style="border-right: 2px solid rgba(158,158,158,0.4)"/>
-        <div class="post-comment-button flex-grow-1 text-center mr-5">
+        <div class="post-comment-button flex-grow-1 text-center mr-sm-5 mr-3">
           <p class="mx-auto my-1 font-weight-bolder">{{post.postComments.length}} Comment<span v-if="post.postComments.length>1">s</span></p>
         </div>
       </div>
@@ -269,7 +269,7 @@ export default {
   .page-index-left{
     font-size: 50%;
     padding: 5px 10px;
-    background-image: linear-gradient(to right, rgba(215, 215, 215, 0.5), white);
+    background-image: linear-gradient(to left, rgba(235, 235, 235, 0.36), white);
     animation: slideInLeft 0.2s ease-in ;
   }
   .page-chevron-right{
@@ -283,7 +283,7 @@ export default {
   .page-index-right{
     font-size: 50%;
     padding: 5px 10px;
-    background-image: linear-gradient(to left, rgba(215, 215, 215, 0.5), white);
+    background-image: linear-gradient(to left, rgba(235, 235, 235, 0.36), white);
     animation: slideInRight 0.2s ease-in ;
   }
   @keyframes slideInLeft {
