@@ -39,6 +39,30 @@
       </nav>
     </div>
     <div class="web-body">
+      <!--Pop-up Notice-->
+      <notifications group="notice-app"
+                     :width="500"
+                     animation-name="v-fade-left"
+                     position="center left">
+        <template slot="body" slot-scope="props">
+          <div class="custom-container"
+               :class="[ props.item.type === 'error' ? 'notice-error-container' : 'notice-success-container' ]">
+            <div class="custom-icon"
+                 :class="[ props.item.type === 'error' ? 'notice-error-icon' : 'notice-success-icon' ]">
+              <b-icon-check-circle v-if="props.item.type === 'success'"/>
+              <b-icon-alert-triangle v-if="props.item.type === 'error'"/>
+            </div>
+            <div class="custom-template-content">
+              <div :class="[ props.item.type === 'error' ? 'notice-error-title' : 'notice-success-title' ]">
+                {{props.item.title}}
+              </div>
+              <div class="custom-template-text">
+                {{props.item.text}}
+              </div>
+            </div>
+          </div>
+        </template>
+      </notifications>
       <router-view></router-view>
     </div>
   </div>
