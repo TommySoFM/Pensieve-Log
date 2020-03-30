@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="web-header sticky-top d-flex flex-column flex-sm-row align-items-center px-sm-4 px-3 pt-3 border-bottom shadow">
+    <div class="web-header d-flex flex-column flex-sm-row sticky-top
+                align-items-center px-sm-4 px-3 pt-3 border-bottom shadow"
+         :class="{'header--collapse': !scrollTop}">
       <div class="d-flex align-items-center mr-sm-auto">
       <svg class="logo-pic py-0" viewBox="-200 -40 650 650">
         <logo-pic/>
@@ -12,30 +14,30 @@
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isSignupPage">Sign-up</router-link>
       </nav>
       <div class="col-1 d-none d-lg-inline-block"></div>
-      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0 " @click="scrollToBottom" v-if="!isHomePage">
-        <div class="border-left"/>
+      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0 " @click="scrollToBottom" v-if="!isHomePage"  :class="{'nav--collapse ': !scrollTop}">
+        <div class="border-left" v-if="scrollTop"/>
         <router-link tag="h5" to="/login" class="nav-header flex-grow-1 text-center pt-3">
           Log-in
         </router-link>
-        <div class="border-left"/>
+        <div class="border-left" v-if="scrollTop"/>
         <router-link tag="h5" to="/signup" class="nav-header flex-grow-1 text-center pt-3">
           Sign-up
         </router-link>
-        <div class="border-left"/>
+        <div class="border-left" v-if="scrollTop"/>
       </nav>
-      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 mb-2 my-sm-0 " v-if="isHomePage">
-        <div class="border-left"/>
+      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 mb-2 my-sm-0" v-if="isHomePage" :class="{'nav--collapse': !scrollTop}">
+        <div class="border-left" v-if="scrollTop"/>
         <router-link tag="h5" to="/user" class="nav-header flex-grow-1 text-center pt-3" v-if="!isUserPage">
           User
         </router-link>
         <router-link tag="h5" to="/post/1" class="nav-header flex-grow-1 text-center pt-3" v-if="isUserPage">
           Home
         </router-link>
-        <div class="border-left"/>
+        <div class="border-left" v-if="scrollTop"/>
         <h5 to="/" class="nav-header flex-grow-1 text-center pt-3" @click="logout">
           Logout
         </h5>
-        <div class="border-left"/>
+        <div class="border-left" v-if="scrollTop"/>
       </nav>
     </div>
     <div class="web-body">
@@ -77,7 +79,10 @@ import homeMixin from './mixins/homeMixin'
 export default {
   data () {
     return {
-      currentPage: this.$route.path
+      currentPage: this.$route.path,
+      lastPosition: null,
+      lastPositionAlter: null,
+      scrollThreshold: 70
     }
   },
   computed: {
@@ -86,7 +91,8 @@ export default {
       'isFrontPage',
       'isLoginPage',
       'isSignupPage',
-      'isUserPage'
+      'isUserPage',
+      'scrollTop'
     ]),
     isHomePage () {
       return (!this.isFrontPage && !this.isLoginPage && !this.isSignupPage)
@@ -104,6 +110,7 @@ export default {
   },
   created () {
     this.$store.dispatch('setCurrentPathName', this.$route.name)
+    window.addEventListener('scroll', this.scrollHandler, true)
   },
   watch: {
     $route (to, from) {
@@ -118,6 +125,15 @@ export default {
     },
     logout () {
       this.mixinLogout()
+    },
+    scrollHandler () {
+      if (window.scrollY - this.lastPosition > this.scrollThreshold) {
+        this.$store.dispatch('setScrollTop', false)
+        this.lastPosition = window.scrollY
+      } else if (this.lastPosition - window.scrollY > this.scrollThreshold) {
+        this.$store.dispatch('setScrollTop', true)
+        this.lastPosition = window.scrollY
+      }
     }
   }
 }
@@ -215,6 +231,55 @@ export default {
   @media screen and (max-width: 500px) {
     .custom-container {
       transform: translateX(-70px) scale(0.7);
+    }
+  }
+  /* Apply to ms-size */
+  @media screen and (max-width: 575px) {
+    .header--collapse{
+      animation: collapse 200ms ease-in;
+      animation-fill-mode: forwards;
+      -webkit-animation: collapse 200ms ease-in;
+      -webkit-animation-fill-mode: forwards
+    }
+    @keyframes collapse {
+      0% {height: 18vh}
+      100% {height: 10vh}
+    }
+    @-webkit-keyframes collapse {
+      0% {height: 18vh}
+      100% {height: 10vh}
+    }
+    .nav--collapse {
+      animation: unpinned 400ms linear;
+      animation-fill-mode: forwards;
+      -webkit-animation: unpinned 400ms linear;
+      -webkit-animation-fill-mode: forwards;
+    }
+    @keyframes unpinned {
+      0% {transform: translateY(0%); color: inherit;}
+      45% {transform: translateY(-50%); color: transparent;}
+      90% {transform: translateY(-100%); color: transparent;}
+      100% {transform: translateY(-250%); color: transparent;}
+    }
+    @-webkit-keyframes unpinned {
+      0% {transform: translateY(0%); color: inherit;}
+      45% {transform: translateY(-50%); color: transparent;}
+      90% {transform: translateY(-100%); color: transparent;}
+      100% {transform: translateY(-250%); color: transparent;}
+    }
+    .icon-upshift {
+      animation: shift 200ms ease-in;
+      animation-fill-mode: forwards;
+      -webkit-animation: shift 200ms ease-in;
+      -webkit-animation-fill-mode: forwards;
+    }
+    @keyframes shift {
+      0% {transform: translateY(0);}
+      100% {transform: translateY(-20px);}
+    }
+    @-webkit-keyframes shift {
+      0% {transform: translateY(0);}
+      100% {transform: translateY(-20px);}
     }
   }
   @media screen and (max-width: 768px){

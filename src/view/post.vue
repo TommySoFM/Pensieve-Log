@@ -4,7 +4,7 @@
       <home :isPanelOpened="isPanelOpened" :panelOff="panelOff"/>
     </div>
     <div class="panel-on-button mt-5 mt-sm-0" @click="panelOn">
-      <BIconList/>
+      <BIconList :class="{'icon-upshift': !scrollTop}"/>
     </div>
     <router-link tag="div" class="page-chevron-left" :to="previous" v-if="isLastPage">
       <BIconChevronLeft v-if="!hoverToPrevious" @mouseenter="hoverToPrevious=true"/>
@@ -94,7 +94,8 @@ export default {
       'next',
       'previous',
       'isFirstPage',
-      'isLastPage'
+      'isLastPage',
+      'scrollTop'
     ])
   },
   mixins: [

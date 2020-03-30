@@ -1,5 +1,6 @@
 const state = {
-  currentPathName: ''
+  currentPathName: '',
+  scrollTop: true
 }
 
 const getters = {
@@ -17,18 +18,27 @@ const getters = {
   },
   isUserPage: (state) => {
     return state.currentPathName === 'user'
+  },
+  scrollTop: (state) => {
+    return state.scrollTop
   }
 }
 
 const mutations = {
   setCurrentPathName: (state, payload) => {
     state.currentPathName = payload
+  },
+  setScrollTop: (state, payload) => {
+    state.scrollTop = payload
   }
 }
 
 const actions = {
   setCurrentPathName: ({ commit }, payload) => {
     commit('setCurrentPathName', payload)
+  },
+  setScrollTop: ({ commit }, payload) => {
+    commit('setScrollTop', payload)
   }
 }
 
