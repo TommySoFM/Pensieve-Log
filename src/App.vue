@@ -14,30 +14,30 @@
         <router-link tag="h5" to="/" class="text-center border-left border-right" style="cursor: pointer" v-if="this.isSignupPage">Sign-up</router-link>
       </nav>
       <div class="col-1 d-none d-lg-inline-block"></div>
-      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0 " @click="scrollToBottom" v-if="!isHomePage"  :class="{'nav--collapse ': !scrollTop}">
-        <div class="border-left" v-if="scrollTop"/>
+      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 d-lg-none mb-2 my-sm-0 " @click="scrollToBottom" v-if="!isHomePage && scrollTop">
+        <div class="border-left"/>
         <router-link tag="h5" to="/login" class="nav-header flex-grow-1 text-center pt-3">
           Log-in
         </router-link>
-        <div class="border-left" v-if="scrollTop"/>
+        <div class="border-left"/>
         <router-link tag="h5" to="/signup" class="nav-header flex-grow-1 text-center pt-3">
           Sign-up
         </router-link>
-        <div class="border-left" v-if="scrollTop"/>
+        <div class="border-left"/>
       </nav>
-      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 mb-2 my-sm-0" v-if="isHomePage" :class="{'nav--collapse': !scrollTop}">
-        <div class="border-left" v-if="scrollTop"/>
+      <nav class="nav-selection col-12 col-sm-4 d-flex mr-md-4 mb-2 my-sm-0" v-if="isHomePage && scrollTop">
+        <div class="border-left"/>
         <router-link tag="h5" to="/user" class="nav-header flex-grow-1 text-center pt-3" v-if="!isUserPage">
           User
         </router-link>
         <router-link tag="h5" to="/post/1" class="nav-header flex-grow-1 text-center pt-3" v-if="isUserPage">
           Home
         </router-link>
-        <div class="border-left" v-if="scrollTop"/>
+        <div class="border-left"/>
         <h5 to="/" class="nav-header flex-grow-1 text-center pt-3" @click="logout">
           Logout
         </h5>
-        <div class="border-left" v-if="scrollTop"/>
+        <div class="border-left"/>
       </nav>
     </div>
     <div class="web-body">
@@ -248,24 +248,6 @@ export default {
     @-webkit-keyframes collapse {
       0% {height: 18vh}
       100% {height: 10vh}
-    }
-    .nav--collapse {
-      animation: unpinned 400ms linear;
-      animation-fill-mode: forwards;
-      -webkit-animation: unpinned 400ms linear;
-      -webkit-animation-fill-mode: forwards;
-    }
-    @keyframes unpinned {
-      0% {transform: translateY(0%); color: inherit;}
-      45% {transform: translateY(-50%); color: transparent;}
-      90% {transform: translateY(-100%); color: transparent;}
-      100% {transform: translateY(-250%); color: transparent;}
-    }
-    @-webkit-keyframes unpinned {
-      0% {transform: translateY(0%); color: inherit;}
-      45% {transform: translateY(-50%); color: transparent;}
-      90% {transform: translateY(-100%); color: transparent;}
-      100% {transform: translateY(-250%); color: transparent;}
     }
     .icon-upshift {
       animation: shift 200ms ease-in;

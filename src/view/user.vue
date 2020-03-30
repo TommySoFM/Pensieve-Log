@@ -61,6 +61,7 @@ export default {
     flex-direction: column;
     height: 90vh;
     position: relative;
+    overflow: scroll;
   }
   .user-page-title{
     display: flex;
@@ -108,5 +109,32 @@ export default {
    }
   .fade-enter{
     opacity: 0;
+  }
+  /* Apply to ms-size */
+  @media screen and (max-width: 575px) {
+    .user-page-container{
+      height: 80vh;
+    }
+    .user-page-option{
+      width: 70%;
+    }
+    .page-title-margin{
+      margin-top: 10vh;
+    }
+    .user-page-text{
+      font-size: 30px;
+    }
+    .post-created-selected{
+      top: 10vh;
+      transform: translateY(-10vh) scale(0.7);
+    }
+    .post-liked-selected{
+      top: 26.5vh;
+      transform: translateY(-26.5vh) scale(0.7);
+    }
+    .setting-selected{
+      top: 43.5vh;
+      transform: translateY(-43.5vh) scale(0.7);
+    }
   }
 </style>
