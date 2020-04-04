@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     newPost () {
-      if (RegExp('(?=.*?[a-zA-Z0-9\\W]).+').test(this.postText)) {
+      if (RegExp('[^\\s-]{1,}').test(this.postText)) {
         this.mixinNewPost(this.postText)
         this.postText = ''
       } else {

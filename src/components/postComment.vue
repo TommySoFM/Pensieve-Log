@@ -87,7 +87,7 @@ export default {
       this.commentSelector -= val
     },
     newComment () {
-      if (RegExp('(?=.*?[a-zA-Z0-9]).+').test(this.newCommentText)) {
+      if (RegExp('[^\\s-]{1,}').test(this.newCommentText)) {
         this.mixinNewComment(this.postData.id, this.newCommentText)
         this.newCommentText = ''
       } else {
